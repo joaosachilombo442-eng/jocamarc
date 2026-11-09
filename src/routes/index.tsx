@@ -3,7 +3,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight, MapPin } from "lucide-react";
 
 import heroImage from "@/assets/photo-catadores-triagem.jpg";
-import { CategoryTag, FeaturedNews, NewsCard } from "@/components/news/NewsCard";
+import { FeaturedNews, NewsCard } from "@/components/news/NewsCard";
 import { CtaBand } from "@/components/site/CtaBand";
 import { PartnerSlots } from "@/components/site/PartnerSlots";
 import { DemoBadge, Reveal, SectionHeading } from "@/components/site/primitives";
@@ -18,7 +18,6 @@ import {
 } from "@/content/api";
 import { images } from "@/content/demo-data";
 import { actionAreas, toneClasses } from "@/content/institutional";
-import { formatDate } from "@/lib/format";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -360,6 +359,3 @@ function Partners() {
     </section>
   );
 }
-
-// Exported for reuse by tests and other routes.
-export { CategoryTag, formatDate };
