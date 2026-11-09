@@ -44,7 +44,7 @@ function CooperativesPage() {
         title="Cooperativas e Parceiros"
         description={`As ${site.cooperativesFounded} cooperativas constituídas em ${site.foundedYear} e as instituições que colaboram com a ${site.shortName}.`}
         crumbs={[{ label: "Cooperativas e Parceiros" }]}
-        image={photos.triagemCartao}
+        image={{ ...photos.catadoresContentor, position: "50% 45%" }}
       />
 
       <section className="container-site py-20 md:py-24">

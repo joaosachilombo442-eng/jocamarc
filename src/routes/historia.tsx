@@ -40,7 +40,7 @@ function HistoryPage() {
         title="História da AJOCAMARC"
         description={`Da iniciativa de jovens catadores em ${site.origin.place}, em ${site.origin.year}, à constituição da associação e das suas cinco cooperativas, em ${site.foundedYear}.`}
         crumbs={[{ label: "História" }]}
-        image={photos.camiao}
+        image={{ ...photos.camiao, position: "50% 40%" }}
       />
 
       <section className="container-site grid gap-12 py-20 md:py-24 lg:grid-cols-[1fr_1.4fr]">

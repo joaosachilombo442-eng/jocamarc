@@ -51,7 +51,7 @@ function ActivitiesPage() {
         title="Actividades e Projectos"
         description="As áreas de intervenção, as iniciativas e os projectos desenvolvidos pela AJOCAMARC e pelas suas cooperativas."
         crumbs={[{ label: "Actividades e Projectos" }]}
-        image={photos.grupoContentor}
+        image={{ ...photos.grupoContentor, position: "50% 20%" }}
       />
 
       <section className="container-site py-20 md:py-24">
