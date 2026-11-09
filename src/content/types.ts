@@ -90,7 +90,7 @@ export type Partner = {
 export type ContactMessage = {
   name: string;
   email: string;
-  phone?: string;
+  phone?: string | undefined;
   subject: string;
   message: string;
 };

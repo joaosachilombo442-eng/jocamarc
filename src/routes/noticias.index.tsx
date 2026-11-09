@@ -18,20 +18,20 @@ import { formatMonth } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 type NewsSearch = {
-  q?: string;
-  categoria?: string;
-  mes?: string;
-  pagina?: number;
+  q?: string | undefined;
+  categoria?: string | undefined;
+  mes?: string | undefined;
+  pagina?: number | undefined;
 };
 
 export const Route = createFileRoute("/noticias/")({
   validateSearch: (search: Record<string, unknown>): NewsSearch => {
     const str = (v: unknown) => (typeof v === "string" && v.trim() ? v.trim() : undefined);
-    const page = Number(search.pagina);
+    const page = Number(search["pagina"]);
     return {
-      q: str(search.q),
-      categoria: str(search.categoria),
-      mes: typeof search.mes === "string" && /^\d{4}-\d{2}$/.test(search.mes) ? search.mes : undefined,
+      q: str(search["q"]),
+      categoria: str(search["categoria"]),
+      mes: typeof search["mes"] === "string" && /^\d{4}-\d{2}$/.test(search["mes"]) ? search["mes"] : undefined,
       pagina: Number.isFinite(page) && page > 1 ? Math.floor(page) : undefined,
     };
   },
@@ -66,18 +66,18 @@ function NewsPage() {
   const search = Route.useSearch();
   const navigate = useNavigate({ from: "/noticias/" });
   const { data: result } = useSuspenseQuery(
-    newsListQuery({ q: search.q, category: search.categoria, month: search.mes, page: search.pagina }),
+    newsListQuery({ q: search.q, category: search.categoria, month: search.mes, page: search["pagina"] }),
   );
   const { data: featured } = useSuspenseQuery(featuredNewsQuery());
   const { data: latest } = useSuspenseQuery(latestNewsQuery(4));
   const { data: categories } = useSuspenseQuery(newsCategoriesQuery());
   const { data: archive } = useSuspenseQuery(newsArchiveQuery());
 
-  const [query, setQuery] = useState(search.q ?? "");
-  useEffect(() => setQuery(search.q ?? ""), [search.q]);
+  const [query, setQuery] = useState(search["q"] ?? "");
+  useEffect(() => setQuery(search["q"] ?? ""), [search.q]);
 
-  const filtering = Boolean(search.q || search.categoria || search.mes);
-  const showLead = !filtering && (search.pagina ?? 1) === 1 && featured;
+  const filtering = Boolean(search["q"] || search["categoria"] || search["mes"]);
+  const showLead = !filtering && (search["pagina"] ?? 1) === 1 && featured;
   const sideLatest = latest.filter((n) => n.id !== featured?.id).slice(0, 3);
   const hasDemo = latest.some((n) => n.isDemo);
 
@@ -86,7 +86,7 @@ function NewsPage() {
     navigate({ search: (prev) => ({ ...prev, q: query.trim() || undefined, pagina: undefined }) });
   };
 
-  const activeCategory = categories.find((c) => c.slug === search.categoria);
+  const activeCategory = categories.find((c) => c.slug === search["categoria"]);
 
   return (
     <>
@@ -128,7 +128,7 @@ function NewsPage() {
           <div className="mt-8 flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Categorias">
             <CategoryChip active={!search.categoria} label="Todas" categoria={undefined} />
             {categories.map((c) => (
-              <CategoryChip key={c.slug} active={search.categoria === c.slug} label={c.name} categoria={c.slug} />
+              <CategoryChip key={c.slug} active={search["categoria"] === c.slug} label={c.name} categoria={c.slug} />
             ))}
           </div>
         </div>
@@ -177,9 +177,9 @@ function NewsPage() {
 
             {filtering && (
               <div className="mb-6 flex flex-wrap items-center gap-2 text-sm">
-                {search.q && <FilterPill label={`“${search.q}”`} clear={{ q: undefined }} />}
+                {search["q"] && <FilterPill label={`“${search.q}”`} clear={{ q: undefined }} />}
                 {activeCategory && <FilterPill label={activeCategory.name} clear={{ categoria: undefined }} />}
-                {search.mes && <FilterPill label={formatMonth(search.mes)} clear={{ mes: undefined }} />}
+                {search["mes"] && <FilterPill label={formatMonth(search["mes"])} clear={{ mes: undefined }} />}
               </div>
             )}
 
@@ -217,7 +217,7 @@ function NewsPage() {
                       search={(prev) => ({ ...prev, mes: prev.mes === m.month ? undefined : m.month, pagina: undefined })}
                       className={cn(
                         "flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted",
-                        search.mes === m.month && "bg-primary-soft font-semibold text-primary-deep",
+                        search["mes"] === m.month && "bg-primary-soft font-semibold text-primary-deep",
                       )}
                     >
                       <span>{formatMonth(m.month)}</span>

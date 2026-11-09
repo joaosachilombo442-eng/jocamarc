@@ -14,11 +14,11 @@ import type { ContactMessage, NewsArticle } from "./types";
 export const NEWS_PAGE_SIZE = 6;
 
 export type NewsListParams = {
-  q?: string;
-  category?: string;
-  page?: number;
+  q?: string | undefined;
+  category?: string | undefined;
+  page?: number | undefined;
   /** Archive filter, formatted "YYYY-MM". */
-  month?: string;
+  month?: string | undefined;
 };
 
 export type NewsListResult = {
