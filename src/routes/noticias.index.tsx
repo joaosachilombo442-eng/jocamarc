@@ -234,7 +234,7 @@ function NewsPage() {
   );
 }
 
-function CategoryChip({ active, label, categoria }: { active: boolean; label: string; categoria?: string }) {
+function CategoryChip({ active, label, categoria }: { active: boolean; label: string; categoria?: string | undefined }) {
   return (
     <Link
       to="/noticias"
