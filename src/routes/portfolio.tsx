@@ -185,7 +185,7 @@ function AlbumBlock({ album, onOpen }: { album: PortfolioAlbum; onOpen: (photoId
           )}
         </p>
       </header>
-      <ul className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+      <ul className={cn("columns-1 gap-4 sm:columns-2", album.photos.length >= 3 && "lg:columns-3")}>
         {album.photos.map((p) => (
           <li key={p.id} className="mb-4 break-inside-avoid">
             <button
