@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Calendar } from "lucide-react";
 
+import { MediaPlaceholder, type PlaceholderTone } from "@/components/site/MediaPlaceholder";
 import { DemoBadge } from "@/components/site/primitives";
 import type { NewsArticle, NewsCategory } from "@/content/types";
 import { formatDate } from "@/lib/format";
@@ -14,6 +15,17 @@ const CATEGORY_TONE: Record<string, string> = {
   formacao: "bg-brand-red text-primary-foreground",
 };
 
+const CATEGORY_PLACEHOLDER: Record<string, PlaceholderTone> = {
+  institucional: "deep",
+  cooperativas: "blue",
+  ambiente: "primary",
+  comunidade: "accent",
+  formacao: "red",
+};
+
+const categoryName = (slug: string, categories: NewsCategory[]) =>
+  categories.find((c) => c.slug === slug)?.name ?? slug;
+
 export function CategoryTag({
   slug,
   categories,
@@ -23,7 +35,7 @@ export function CategoryTag({
   categories: NewsCategory[];
   className?: string;
 }) {
-  const name = categories.find((c) => c.slug === slug)?.name ?? slug;
+  const name = categoryName(slug, categories);
   return (
     <span
       className={cn(
@@ -56,14 +68,18 @@ export function NewsCard({
           tabIndex={-1}
           aria-hidden
         >
-          <img
-            src={article.coverImage}
-            alt=""
-            loading="lazy"
-            width={320}
-            height={240}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          {article.coverImage ? (
+            <img
+              src={article.coverImage}
+              alt=""
+              loading="lazy"
+              width={320}
+              height={240}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <MediaPlaceholder size="sm" tone={CATEGORY_PLACEHOLDER[article.categorySlug] ?? "primary"} />
+          )}
         </Link>
         <div className="min-w-0">
           <div className="mb-1.5 flex flex-wrap items-center gap-2">
@@ -94,14 +110,21 @@ export function NewsCard({
         tabIndex={-1}
         aria-hidden
       >
-        <img
-          src={article.coverImage}
-          alt=""
-          loading="lazy"
-          width={800}
-          height={500}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
+        {article.coverImage ? (
+          <img
+            src={article.coverImage}
+            alt=""
+            loading="lazy"
+            width={800}
+            height={500}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <MediaPlaceholder
+            label={categoryName(article.categorySlug, categories)}
+            tone={CATEGORY_PLACEHOLDER[article.categorySlug] ?? "primary"}
+          />
+        )}
         <span className="absolute left-4 top-4 flex gap-2">
           <CategoryTag slug={article.categorySlug} categories={categories} />
           {article.isDemo && <DemoBadge />}
@@ -137,13 +160,22 @@ export function FeaturedNews({
 }) {
   return (
     <article className="group relative isolate overflow-hidden rounded-2xl bg-ink shadow-lift">
-      <img
-        src={article.coverImage}
-        alt={article.coverAlt}
-        width={1600}
-        height={900}
-        className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-[1.03]"
-      />
+      {article.coverImage ? (
+        <img
+          src={article.coverImage}
+          alt={article.coverAlt ?? ""}
+          width={1600}
+          height={900}
+          className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-[1.03]"
+        />
+      ) : (
+        <MediaPlaceholder
+          size="lg"
+          showText={false}
+          tone={CATEGORY_PLACEHOLDER[article.categorySlug] ?? "primary"}
+          className="absolute inset-0 -z-10"
+        />
+      )}
       <div className="card-scrim absolute inset-0 -z-10" aria-hidden />
       <div className="flex min-h-[26rem] flex-col justify-end p-6 text-ink-foreground sm:p-10 md:min-h-[32rem]">
         <div className="mb-4 flex flex-wrap items-center gap-2">

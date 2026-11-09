@@ -5,7 +5,7 @@ import { CtaBand } from "@/components/site/CtaBand";
 import { PageHeader, PendingContent, Reveal } from "@/components/site/primitives";
 import { Button } from "@/components/ui/button";
 import { site } from "@/config/site";
-import { images } from "@/content/demo-data";
+import { photos } from "@/content/media";
 import { timeline } from "@/content/institutional";
 import { cn } from "@/lib/utils";
 
@@ -40,7 +40,7 @@ function HistoryPage() {
         title="História da AJOCAMARC"
         description={`Da iniciativa de jovens catadores em ${site.origin.place}, em ${site.origin.year}, à constituição da associação e das suas cinco cooperativas, em ${site.foundedYear}.`}
         crumbs={[{ label: "História" }]}
-        image={images.fardos}
+        image={{ ...photos.camiao, position: "50% 40%" }}
       />
 
       <section className="container-site grid gap-12 py-20 md:py-24 lg:grid-cols-[1fr_1.4fr]">

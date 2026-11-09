@@ -35,3 +35,4 @@ use the editor.
 - Unconfirmed institutional fields are `null` in `src/config/site.ts` / `src/content/institutional.ts` and render as "A confirmar" / `PendingContent` slots. Why: the client forbids invented data.
 - Sample items carry `isDemo: true` and show `DemoBadge`/`DemoNotice`. Why: keeps demo content visibly distinct from official publications.
 - Brand colours live as tokens in `src/styles.css` (primary/accent/brand-blue/brand-red/brand-yellow/ink); components use only those tokens. Why: one place to keep the logo palette consistent.
+- Every photograph comes from `src/content/media.ts` (CDN pointers of originals supplied by the association); demo items carry no photo and render `MediaPlaceholder`. Why: generated/stock imagery is forbidden and real photos must never illustrate invented events.

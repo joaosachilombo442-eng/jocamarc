@@ -9,6 +9,7 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import * as source from "./demo-data";
+import * as media from "./media";
 import type { ContactMessage, NewsArticle } from "./types";
 
 export const NEWS_PAGE_SIZE = 6;
@@ -94,7 +95,7 @@ export async function listProjects() {
 }
 
 export async function listAlbums() {
-  return source.albums;
+  return media.albums;
 }
 
 export async function listCooperatives() {

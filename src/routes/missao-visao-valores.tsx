@@ -3,7 +3,7 @@ import { Compass, Gem, Target } from "lucide-react";
 
 import { CtaBand } from "@/components/site/CtaBand";
 import { PageHeader, PendingContent, Reveal } from "@/components/site/primitives";
-import { images } from "@/content/demo-data";
+import { photos } from "@/content/media";
 import { missionVisionValues } from "@/content/institutional";
 
 export const Route = createFileRoute("/missao-visao-valores")({
@@ -37,7 +37,7 @@ function MvvPage() {
         title="Missão, Visão e Valores"
         description="Os princípios que orientam o trabalho da AJOCAMARC e dos jovens catadores."
         crumbs={[{ label: "Missão, Visão e Valores" }]}
-        image={images.sensibilizacao}
+        image={{ ...photos.encontroArLivre, position: "50% 40%" }}
       />
 
       <section className="container-site grid gap-6 py-20 md:grid-cols-2 md:py-24">

@@ -57,8 +57,7 @@ function PortfolioPage() {
             <span className="text-accent">em imagens</span>
           </h1>
           <p className="max-w-md text-lg leading-relaxed text-ink-muted">
-            Fotografias e vídeos das actividades e projectos da AJOCAMARC, organizados por álbum, com
-            data e local.
+            Fotografias e vídeos originais das actividades da AJOCAMARC, organizados por álbum.
           </p>
         </div>
         {albums.some((a) => a.isDemo) && (

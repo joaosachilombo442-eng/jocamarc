@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 
 import { site } from "@/config/site";
-import { listCooperatives, listNews, listPartners, NEWS_PAGE_SIZE } from "@/content/api";
+import { listAlbums, listCooperatives, listNews, listPartners, listProjects, NEWS_PAGE_SIZE } from "@/content/api";
+import { photos } from "@/content/media";
 import { timeline } from "@/content/institutional";
 
 describe("Confirmed institutional facts", () => {
@@ -55,5 +56,27 @@ describe("News listing", () => {
     expect(coops.items.every((n) => n.categorySlug === "cooperativas")).toBe(true);
     const found = await listNews({ q: "sensibilizacao" });
     expect(found.items.some((n) => n.title.includes("sensibilização"))).toBe(true);
+  });
+});
+
+describe("Only original AJOCAMARC photographs", () => {
+  const supplied = new Set(Object.values(photos).map((p) => p.src));
+
+  it("every portfolio photo is one supplied by the association", async () => {
+    const albums = await listAlbums();
+    const all = albums.flatMap((a) => a.photos);
+    expect(all.length).toBeGreaterThan(0);
+    expect(all.every((p) => supplied.has(p.src))).toBe(true);
+  });
+
+  it("supplied photos are served from the asset CDN, not bundled files", () => {
+    expect([...supplied].every((src) => src.startsWith("/__l5e/assets-v1/"))).toBe(true);
+  });
+
+  it("demo news and projects carry no photograph, so real photos never illustrate invented events", async () => {
+    const { items } = await listNews({ page: 1 });
+    expect(items.every((n) => n.coverImage === null)).toBe(true);
+    const projects = await listProjects();
+    expect(projects.filter((p) => p.isDemo).every((p) => p.images.length === 0)).toBe(true);
   });
 });

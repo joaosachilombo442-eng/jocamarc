@@ -79,16 +79,20 @@ function ArticlePage() {
         </div>
       </header>
 
-      <figure className="container-site mt-10 max-w-6xl">
-        <img
-          src={article.coverImage}
-          alt={article.coverAlt}
-          width={1600}
-          height={1000}
-          className="aspect-[16/9] w-full rounded-2xl object-cover shadow-lift"
-        />
-        <figcaption className="mt-3 text-sm text-muted-foreground">{article.coverAlt}</figcaption>
-      </figure>
+      {article.coverImage && (
+        <figure className="container-site mt-10 max-w-6xl">
+          <img
+            src={article.coverImage}
+            alt={article.coverAlt ?? ""}
+            width={1600}
+            height={1000}
+            className="aspect-[16/9] w-full rounded-2xl object-cover shadow-lift"
+          />
+          {article.coverAlt && (
+            <figcaption className="mt-3 text-sm text-muted-foreground">{article.coverAlt}</figcaption>
+          )}
+        </figure>
+      )}
 
       <div className="container-site max-w-3xl py-12 md:py-16">
         {article.isDemo && (

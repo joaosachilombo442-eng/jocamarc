@@ -2,9 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowRight, MapPin } from "lucide-react";
 
-import heroImage from "@/assets/photo-catadores-triagem.jpg";
 import { FeaturedNews, NewsCard } from "@/components/news/NewsCard";
 import { CtaBand } from "@/components/site/CtaBand";
+import { MediaPlaceholder, type PlaceholderTone } from "@/components/site/MediaPlaceholder";
 import { PartnerSlots } from "@/components/site/PartnerSlots";
 import { DemoBadge, Reveal, SectionHeading } from "@/components/site/primitives";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ import {
   partnersQuery,
   projectsQuery,
 } from "@/content/api";
-import { images } from "@/content/demo-data";
+import { photos } from "@/content/media";
 import { actionAreas, toneClasses } from "@/content/institutional";
 
 export const Route = createFileRoute("/")({
@@ -68,12 +68,13 @@ function Hero() {
   return (
     <section className="relative isolate overflow-hidden bg-ink">
       <img
-        src={heroImage}
-        alt="Jovens catadores separam garrafas de plástico num ponto de recolha ao fim da tarde"
-        width={1600}
-        height={907}
+        src={photos.grupoRua.src}
+        alt={photos.grupoRua.alt}
+        width={photos.grupoRua.width}
+        height={photos.grupoRua.height}
         fetchPriority="high"
-        className="absolute inset-0 -z-10 h-full w-full object-cover object-[65%_center]"
+        style={{ objectPosition: photos.grupoRua.position }}
+        className="absolute inset-0 -z-10 h-full w-full object-cover"
       />
       <div className="hero-scrim absolute inset-0 -z-10" aria-hidden />
       <div className="container-site flex min-h-[78vh] flex-col justify-center py-20 text-ink-foreground md:min-h-[86vh]">
@@ -108,11 +109,12 @@ function About() {
     <section className="container-site grid gap-12 py-20 md:py-28 lg:grid-cols-2 lg:items-center">
       <Reveal className="relative">
         <img
-          src={images.reuniao}
-          alt="Jovens reunidos numa reunião de cooperativa"
+          src={photos.catadoresContentor.src}
+          alt={photos.catadoresContentor.alt}
           loading="lazy"
-          width={1600}
-          height={1072}
+          width={photos.catadoresContentor.width}
+          height={photos.catadoresContentor.height}
+          style={{ objectPosition: photos.catadoresContentor.position }}
           className="aspect-[4/3] w-full rounded-2xl object-cover shadow-lift"
         />
         <div className="absolute -bottom-6 -right-2 hidden rounded-xl bg-background p-5 shadow-lift sm:block md:-right-6">
@@ -205,6 +207,8 @@ function Areas() {
   );
 }
 
+const PROJECT_TONES: PlaceholderTone[] = ["primary", "accent", "blue"];
+
 function ProjectsPreview() {
   const { data: projects } = useSuspenseQuery(projectsQuery());
   const items = projects.slice(0, 3);
@@ -231,14 +235,18 @@ function ProjectsPreview() {
                 className="group block h-full overflow-hidden rounded-xl bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift"
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={p.images[0]?.src}
-                    alt={p.images[0]?.alt ?? ""}
-                    loading="lazy"
-                    width={800}
-                    height={600}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                  {p.images[0] ? (
+                    <img
+                      src={p.images[0].src}
+                      alt={p.images[0].alt}
+                      loading="lazy"
+                      width={800}
+                      height={600}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <MediaPlaceholder label={p.area} tone={PROJECT_TONES[i % PROJECT_TONES.length] ?? "primary"} />
+                  )}
                 </div>
                 <div className="p-6">
                   <div className="mb-3 flex items-center gap-2">
@@ -293,7 +301,9 @@ function NewsPreview() {
 
 function PortfolioPreview() {
   const { data: albums } = useSuspenseQuery(albumsQuery());
-  const photos = albums.flatMap((a) => a.photos.map((p) => ({ ...p, album: a }))).slice(0, 5);
+  const all = albums.flatMap((a) => a.photos.map((p) => ({ ...p, album: a })));
+  const firstOfEach = albums.flatMap((a) => (a.photos[0] ? [{ ...a.photos[0], album: a }] : []));
+  const picks = [...firstOfEach, ...all.filter((p) => !firstOfEach.some((f) => f.id === p.id))].slice(0, 5);
   return (
     <section className="bg-ink py-20 text-ink-foreground md:py-28">
       <div className="container-site">
@@ -309,7 +319,7 @@ function PortfolioPreview() {
           </Button>
         </div>
         <div className="grid auto-rows-[11rem] grid-cols-2 gap-3 md:auto-rows-[14rem] md:grid-cols-4">
-          {photos.map((p, i) => (
+          {picks.map((p, i) => (
             <Link
               key={p.id}
               to="/portfolio"
