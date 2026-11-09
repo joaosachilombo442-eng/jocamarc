@@ -8,7 +8,7 @@ export function CtaBand() {
     <section className="container-site py-20">
       <div className="relative overflow-hidden rounded-3xl bg-primary px-6 py-14 text-primary-foreground sm:px-12 md:py-16">
         <div
-          className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent/90"
+          className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-primary-deep/40"
           aria-hidden
         />
         <div
