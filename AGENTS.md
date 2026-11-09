@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- All page content (news, projects, portfolio, cooperatives, partners) is read through `src/content/api.ts` query functions + `queryOptions`; pages never hard-code it. Why: the future admin panel (Lovable Cloud) replaces only those function bodies.
+- Unconfirmed institutional fields are `null` in `src/config/site.ts` / `src/content/institutional.ts` and render as "A confirmar" / `PendingContent` slots. Why: the client forbids invented data.
+- Sample items carry `isDemo: true` and show `DemoBadge`/`DemoNotice`. Why: keeps demo content visibly distinct from official publications.
+- Brand colours live as tokens in `src/styles.css` (primary/accent/brand-blue/brand-red/brand-yellow/ink); components use only those tokens. Why: one place to keep the logo palette consistent.
