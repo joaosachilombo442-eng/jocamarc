@@ -4,9 +4,10 @@ import { Building2, Calendar, MapPin } from "lucide-react";
 import { useState } from "react";
 
 import { CtaBand } from "@/components/site/CtaBand";
+import { MediaPlaceholder, type PlaceholderTone } from "@/components/site/MediaPlaceholder";
 import { DemoBadge, DemoNotice, PageHeader, Reveal, SectionHeading } from "@/components/site/primitives";
 import { projectsQuery } from "@/content/api";
-import { images } from "@/content/demo-data";
+import { photos } from "@/content/media";
 import { actionAreas, toneClasses } from "@/content/institutional";
 import type { ProjectStatus } from "@/content/types";
 import { cn } from "@/lib/utils";
@@ -35,6 +36,8 @@ const STATUS: Record<ProjectStatus, { label: string; className: string }> = {
   concluido: { label: "Concluído", className: "bg-primary-soft text-primary" },
 };
 
+const PLACEHOLDER_TONES: PlaceholderTone[] = ["primary", "accent", "blue", "deep"];
+
 function ActivitiesPage() {
   const { data: projects } = useSuspenseQuery(projectsQuery());
   const areas = ["Todas", ...Array.from(new Set(projects.map((p) => p.area)))];
@@ -48,7 +51,7 @@ function ActivitiesPage() {
         title="Actividades e Projectos"
         description="As áreas de intervenção, as iniciativas e os projectos desenvolvidos pela AJOCAMARC e pelas suas cooperativas."
         crumbs={[{ label: "Actividades e Projectos" }]}
-        image={images.limpeza}
+        image={photos.grupoContentor}
       />
 
       <section className="container-site py-20 md:py-24">
@@ -105,14 +108,18 @@ function ActivitiesPage() {
                   className="grid h-full scroll-mt-28 overflow-hidden rounded-2xl border bg-card shadow-soft sm:grid-cols-[0.9fr_1fr]"
                 >
                   <div className="aspect-[4/3] overflow-hidden sm:aspect-auto">
-                    <img
-                      src={p.images[0]?.src}
-                      alt={p.images[0]?.alt ?? ""}
-                      loading="lazy"
-                      width={800}
-                      height={600}
-                      className="h-full w-full object-cover"
-                    />
+                    {p.images[0] ? (
+                      <img
+                        src={p.images[0].src}
+                        alt={p.images[0].alt}
+                        loading="lazy"
+                        width={800}
+                        height={600}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <MediaPlaceholder label={p.area} tone={PLACEHOLDER_TONES[i % PLACEHOLDER_TONES.length]} className="min-h-48" />
+                    )}
                   </div>
                   <div className="flex flex-col p-6">
                     <div className="mb-3 flex flex-wrap items-center gap-2">

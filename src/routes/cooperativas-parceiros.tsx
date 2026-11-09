@@ -7,7 +7,7 @@ import { PartnerSlots } from "@/components/site/PartnerSlots";
 import { PageHeader, PendingContent, Reveal, SectionHeading } from "@/components/site/primitives";
 import { PENDING_LABEL, site } from "@/config/site";
 import { cooperativesQuery, partnersQuery } from "@/content/api";
-import { images } from "@/content/demo-data";
+import { photos } from "@/content/media";
 
 export const Route = createFileRoute("/cooperativas-parceiros")({
   head: () => ({
@@ -44,7 +44,7 @@ function CooperativesPage() {
         title="Cooperativas e Parceiros"
         description={`As ${site.cooperativesFounded} cooperativas constituídas em ${site.foundedYear} e as instituições que colaboram com a ${site.shortName}.`}
         crumbs={[{ label: "Cooperativas e Parceiros" }]}
-        image={images.reuniao}
+        image={photos.triagemCartao}
       />
 
       <section className="container-site py-20 md:py-24">

@@ -95,25 +95,25 @@ export function PageHeader({
   description,
   crumbs,
   image,
-  imageAlt = "",
 }: {
   eyebrow: string;
   title: string;
   description?: string;
   crumbs: Crumb[];
-  image?: string;
-  imageAlt?: string;
+  /** Original AJOCAMARC photograph only (see src/content/media.ts). */
+  image?: { src: string; alt: string; width: number; height: number; position: string };
 }) {
   return (
     <section className="relative overflow-hidden border-b bg-primary-soft">
       {image && (
         <>
           <img
-            src={image}
-            alt={imageAlt}
+            src={image.src}
+            alt={image.alt}
             className="absolute inset-0 h-full w-full object-cover"
-            width={1600}
-            height={1072}
+            style={{ objectPosition: image.position }}
+            width={image.width}
+            height={image.height}
           />
           <div className="hero-scrim absolute inset-0" aria-hidden />
         </>
