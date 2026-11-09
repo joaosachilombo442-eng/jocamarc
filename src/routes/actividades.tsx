@@ -118,7 +118,7 @@ function ActivitiesPage() {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <MediaPlaceholder label={p.area} tone={PLACEHOLDER_TONES[i % PLACEHOLDER_TONES.length]} className="min-h-48" />
+                      <MediaPlaceholder label={p.area} tone={PLACEHOLDER_TONES[i % PLACEHOLDER_TONES.length] ?? "primary"} className="min-h-48" />
                     )}
                   </div>
                   <div className="flex flex-col p-6">

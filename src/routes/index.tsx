@@ -245,7 +245,7 @@ function ProjectsPreview() {
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
-                    <MediaPlaceholder label={p.area} tone={PROJECT_TONES[i % PROJECT_TONES.length]} />
+                    <MediaPlaceholder label={p.area} tone={PROJECT_TONES[i % PROJECT_TONES.length] ?? "primary"} />
                   )}
                 </div>
                 <div className="p-6">
