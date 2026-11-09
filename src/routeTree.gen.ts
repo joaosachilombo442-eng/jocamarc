@@ -11,9 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ActividadesRouteImport } from './routes/actividades'
+import { Route as ContactosRouteImport } from './routes/contactos'
 import { Route as CooperativasParceirosRouteImport } from './routes/cooperativas-parceiros'
 import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as MissaoVisaoValoresRouteImport } from './routes/missao-visao-valores'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 
@@ -25,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const ActividadesRoute = ActividadesRouteImport.update({
   id: '/actividades',
   path: '/actividades',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactosRoute = ContactosRouteImport.update({
+  id: '/contactos',
+  path: '/contactos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CooperativasParceirosRoute = CooperativasParceirosRouteImport.update({
@@ -42,6 +49,11 @@ const MissaoVisaoValoresRoute = MissaoVisaoValoresRouteImport.update({
   path: '/missao-visao-valores',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
   id: '/noticias/',
   path: '/noticias/',
@@ -56,18 +68,22 @@ const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/actividades': typeof ActividadesRoute
+  '/contactos': typeof ContactosRoute
   '/cooperativas-parceiros': typeof CooperativasParceirosRoute
   '/historia': typeof HistoriaRoute
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
+  '/portfolio': typeof PortfolioRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/actividades': typeof ActividadesRoute
+  '/contactos': typeof ContactosRoute
   '/cooperativas-parceiros': typeof CooperativasParceirosRoute
   '/historia': typeof HistoriaRoute
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
+  '/portfolio': typeof PortfolioRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias': typeof NoticiasIndexRoute
 }
@@ -75,9 +91,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/actividades': typeof ActividadesRoute
+  '/contactos': typeof ContactosRoute
   '/cooperativas-parceiros': typeof CooperativasParceirosRoute
   '/historia': typeof HistoriaRoute
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
+  '/portfolio': typeof PortfolioRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/': typeof NoticiasIndexRoute
 }
@@ -86,27 +104,33 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/actividades'
+    | '/contactos'
     | '/cooperativas-parceiros'
     | '/historia'
     | '/missao-visao-valores'
+    | '/portfolio'
     | '/noticias/$slug'
     | '/noticias/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/actividades'
+    | '/contactos'
     | '/cooperativas-parceiros'
     | '/historia'
     | '/missao-visao-valores'
+    | '/portfolio'
     | '/noticias/$slug'
     | '/noticias'
   id:
     | '__root__'
     | '/'
     | '/actividades'
+    | '/contactos'
     | '/cooperativas-parceiros'
     | '/historia'
     | '/missao-visao-valores'
+    | '/portfolio'
     | '/noticias/$slug'
     | '/noticias/'
   fileRoutesById: FileRoutesById
@@ -114,9 +138,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActividadesRoute: typeof ActividadesRoute
+  ContactosRoute: typeof ContactosRoute
   CooperativasParceirosRoute: typeof CooperativasParceirosRoute
   HistoriaRoute: typeof HistoriaRoute
   MissaoVisaoValoresRoute: typeof MissaoVisaoValoresRoute
+  PortfolioRoute: typeof PortfolioRoute
   NoticiasSlugRoute: typeof NoticiasSlugRoute
   NoticiasIndexRoute: typeof NoticiasIndexRoute
 }
@@ -135,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/actividades'
       fullPath: '/actividades'
       preLoaderRoute: typeof ActividadesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contactos': {
+      id: '/contactos'
+      path: '/contactos'
+      fullPath: '/contactos'
+      preLoaderRoute: typeof ContactosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cooperativas-parceiros': {
@@ -158,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MissaoVisaoValoresRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/noticias/': {
       id: '/noticias/'
       path: '/noticias'
@@ -178,9 +218,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActividadesRoute: ActividadesRoute,
+  ContactosRoute: ContactosRoute,
   CooperativasParceirosRoute: CooperativasParceirosRoute,
   HistoriaRoute: HistoriaRoute,
   MissaoVisaoValoresRoute: MissaoVisaoValoresRoute,
+  PortfolioRoute: PortfolioRoute,
   NoticiasSlugRoute: NoticiasSlugRoute,
   NoticiasIndexRoute: NoticiasIndexRoute,
 }
