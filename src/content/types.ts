@@ -15,8 +15,9 @@ export type NewsArticle = {
   excerpt: string;
   body: string[];
   categorySlug: string;
-  coverImage: string;
-  coverAlt: string;
+  /** Only original AJOCAMARC photographs; null renders a typographic placeholder. */
+  coverImage: string | null;
+  coverAlt: string | null;
   publishedAt: string; // ISO date
   author?: string;
   location?: string;
