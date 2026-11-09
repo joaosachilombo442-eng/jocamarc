@@ -14,6 +14,8 @@ import { Route as ActividadesRouteImport } from './routes/actividades'
 import { Route as CooperativasParceirosRouteImport } from './routes/cooperativas-parceiros'
 import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as MissaoVisaoValoresRouteImport } from './routes/missao-visao-valores'
+import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
+import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +42,16 @@ const MissaoVisaoValoresRoute = MissaoVisaoValoresRouteImport.update({
   path: '/missao-visao-valores',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
+  id: '/noticias/',
+  path: '/noticias/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
+  id: '/noticias/$slug',
+  path: '/noticias/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +59,8 @@ export interface FileRoutesByFullPath {
   '/cooperativas-parceiros': typeof CooperativasParceirosRoute
   '/historia': typeof HistoriaRoute
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +68,8 @@ export interface FileRoutesByTo {
   '/cooperativas-parceiros': typeof CooperativasParceirosRoute
   '/historia': typeof HistoriaRoute
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias': typeof NoticiasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,6 +78,8 @@ export interface FileRoutesById {
   '/cooperativas-parceiros': typeof CooperativasParceirosRoute
   '/historia': typeof HistoriaRoute
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -71,6 +89,8 @@ export interface FileRouteTypes {
     | '/cooperativas-parceiros'
     | '/historia'
     | '/missao-visao-valores'
+    | '/noticias/$slug'
+    | '/noticias/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -78,6 +98,8 @@ export interface FileRouteTypes {
     | '/cooperativas-parceiros'
     | '/historia'
     | '/missao-visao-valores'
+    | '/noticias/$slug'
+    | '/noticias'
   id:
     | '__root__'
     | '/'
@@ -85,6 +107,8 @@ export interface FileRouteTypes {
     | '/cooperativas-parceiros'
     | '/historia'
     | '/missao-visao-valores'
+    | '/noticias/$slug'
+    | '/noticias/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,6 +117,8 @@ export interface RootRouteChildren {
   CooperativasParceirosRoute: typeof CooperativasParceirosRoute
   HistoriaRoute: typeof HistoriaRoute
   MissaoVisaoValoresRoute: typeof MissaoVisaoValoresRoute
+  NoticiasSlugRoute: typeof NoticiasSlugRoute
+  NoticiasIndexRoute: typeof NoticiasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -132,6 +158,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MissaoVisaoValoresRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/noticias/': {
+      id: '/noticias/'
+      path: '/noticias'
+      fullPath: '/noticias/'
+      preLoaderRoute: typeof NoticiasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias/$slug': {
+      id: '/noticias/$slug'
+      path: '/noticias/$slug'
+      fullPath: '/noticias/$slug'
+      preLoaderRoute: typeof NoticiasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -141,6 +181,8 @@ const rootRouteChildren: RootRouteChildren = {
   CooperativasParceirosRoute: CooperativasParceirosRoute,
   HistoriaRoute: HistoriaRoute,
   MissaoVisaoValoresRoute: MissaoVisaoValoresRoute,
+  NoticiasSlugRoute: NoticiasSlugRoute,
+  NoticiasIndexRoute: NoticiasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
