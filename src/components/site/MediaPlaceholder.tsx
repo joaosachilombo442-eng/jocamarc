@@ -21,11 +21,14 @@ export function MediaPlaceholder({
   label,
   tone = "primary",
   size = "md",
+  showText = true,
   className,
 }: {
   label?: string;
   tone?: PlaceholderTone;
   size?: "sm" | "md" | "lg";
+  /** Hide the label block when other text is overlaid on the panel. */
+  showText?: boolean;
   className?: string;
 }) {
   return (
@@ -41,7 +44,7 @@ export function MediaPlaceholder({
         )}
         strokeWidth={1.25}
       />
-      {size !== "sm" && (
+      {size !== "sm" && showText && (
         <div className="mt-auto p-6">
           {label && (
             <p
