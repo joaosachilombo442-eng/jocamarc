@@ -5,23 +5,11 @@
  * `isDemo: true` and renders with an "Exemplo" badge. It will be replaced by
  * content managed in the future admin panel (see src/content/api.ts).
  * Cooperatives and partners are intentionally left unnamed until confirmed.
+ *
+ * Demo items carry NO photographs: the association's real photos (src/content/media.ts)
+ * must never illustrate an invented event, so these render a typographic placeholder.
  */
-import catadores from "@/assets/photo-catadores-triagem.jpg";
-import reuniao from "@/assets/photo-reuniao-cooperativa.jpg";
-import fardos from "@/assets/photo-fardos-reciclagem.jpg";
-import limpeza from "@/assets/photo-limpeza-comunitaria.jpg";
-import sensibilizacao from "@/assets/photo-sensibilizacao.jpg";
-
-import type {
-  Cooperative,
-  NewsArticle,
-  NewsCategory,
-  Partner,
-  PortfolioAlbum,
-  Project,
-} from "./types";
-
-export const images = { catadores, reuniao, fardos, limpeza, sensibilizacao };
+import type { Cooperative, NewsArticle, NewsCategory, Partner, Project } from "./types";
 
 export const newsCategories: NewsCategory[] = [
   { slug: "institucional", name: "Institucional" },
@@ -37,7 +25,7 @@ const demoBody = (topic: string): string[] => [
   "Cada notícia terá a sua própria página, com ligações de partilha para as redes sociais e sugestões de leitura relacionadas. Este texto deve ser substituído pelo conteúdo oficial da associação.",
 ];
 
-type DemoNewsSeed = Omit<NewsArticle, "body" | "isDemo" | "id">;
+type DemoNewsSeed = Omit<NewsArticle, "body" | "isDemo" | "id" | "coverImage" | "coverAlt">;
 
 const newsSeeds: DemoNewsSeed[] = [
   {
@@ -46,8 +34,6 @@ const newsSeeds: DemoNewsSeed[] = [
     excerpt:
       "Exemplo de notícia principal sobre o trabalho diário dos jovens catadores na recolha e separação de materiais.",
     categorySlug: "ambiente",
-    coverImage: catadores,
-    coverAlt: "Jovens catadores separam garrafas de plástico ao fim da tarde",
     publishedAt: "2026-10-28",
     location: "Luanda",
     featured: true,
@@ -57,8 +43,6 @@ const newsSeeds: DemoNewsSeed[] = [
     title: "Encontro de trabalho entre as cooperativas",
     excerpt: "Exemplo de notícia sobre a articulação entre as cooperativas de catadores.",
     categorySlug: "cooperativas",
-    coverImage: reuniao,
-    coverAlt: "Jovens reunidos em círculo numa reunião de cooperativa",
     publishedAt: "2026-10-14",
     location: "Luanda",
   },
@@ -67,8 +51,6 @@ const newsSeeds: DemoNewsSeed[] = [
     title: "Sessão de sensibilização ambiental com jovens",
     excerpt: "Exemplo de notícia sobre acções de educação ambiental e separação de resíduos.",
     categorySlug: "formacao",
-    coverImage: sensibilizacao,
-    coverAlt: "Facilitadora mostra materiais recicláveis a um grupo de jovens",
     publishedAt: "2026-09-30",
     location: "Luanda",
   },
@@ -77,8 +59,6 @@ const newsSeeds: DemoNewsSeed[] = [
     title: "Acção de limpeza comunitária junto à costa",
     excerpt: "Exemplo de notícia sobre mobilização comunitária e limpeza de espaços públicos.",
     categorySlug: "comunidade",
-    coverImage: limpeza,
-    coverAlt: "Voluntários recolhem resíduos plásticos numa rua junto ao mar",
     publishedAt: "2026-09-12",
     location: "Luanda",
   },
@@ -87,8 +67,6 @@ const newsSeeds: DemoNewsSeed[] = [
     title: "Da recolha à valorização: o percurso dos materiais",
     excerpt: "Exemplo de notícia sobre a cadeia de valor dos materiais recicláveis.",
     categorySlug: "ambiente",
-    coverImage: fardos,
-    coverAlt: "Jovem empurra carrinho com sacos junto a fardos de plástico e cartão",
     publishedAt: "2026-08-21",
     location: "Luanda",
   },
@@ -97,8 +75,6 @@ const newsSeeds: DemoNewsSeed[] = [
     title: "Comunicado institucional da AJOCAMARC",
     excerpt: "Exemplo de formato para comunicados oficiais da direcção da associação.",
     categorySlug: "institucional",
-    coverImage: reuniao,
-    coverAlt: "Reunião de trabalho entre membros",
     publishedAt: "2026-07-30",
   },
   {
@@ -106,8 +82,6 @@ const newsSeeds: DemoNewsSeed[] = [
     title: "Formação prática para jovens catadores",
     excerpt: "Exemplo de notícia sobre capacitação e boas práticas de segurança no trabalho.",
     categorySlug: "formacao",
-    coverImage: catadores,
-    coverAlt: "Catadores com coletes e luvas de protecção",
     publishedAt: "2026-07-08",
     location: "Luanda",
   },
@@ -116,8 +90,6 @@ const newsSeeds: DemoNewsSeed[] = [
     title: "Participação em iniciativa ambiental",
     excerpt: "Exemplo de notícia sobre a presença da associação em eventos públicos.",
     categorySlug: "comunidade",
-    coverImage: limpeza,
-    coverAlt: "Grupo de jovens em acção de limpeza",
     publishedAt: "2026-06-05",
   },
   {
@@ -125,8 +97,6 @@ const newsSeeds: DemoNewsSeed[] = [
     title: "Materiais recicláveis e oportunidades de rendimento",
     excerpt: "Exemplo de artigo de análise sobre economia circular e geração de rendimento.",
     categorySlug: "cooperativas",
-    coverImage: fardos,
-    coverAlt: "Fardos de materiais recicláveis num parque de triagem",
     publishedAt: "2026-05-19",
   },
 ];
@@ -134,6 +104,8 @@ const newsSeeds: DemoNewsSeed[] = [
 export const news: NewsArticle[] = newsSeeds.map((seed, i) => ({
   ...seed,
   id: `demo-news-${i + 1}`,
+  coverImage: null,
+  coverAlt: null,
   body: demoBody(seed.title),
   isDemo: true,
 }));
@@ -146,7 +118,7 @@ export const projects: Project[] = [
     description:
       "Exemplo de ficha de projecto: descrição dos objectivos, das acções realizadas e dos resultados. Substituir pela informação oficial do projecto.",
     area: "Recolha e triagem",
-    images: [{ src: catadores, alt: "Catadores a separar materiais" }],
+    images: [],
     date: "2026",
     location: "Luanda",
     institutions: [],
@@ -160,7 +132,7 @@ export const projects: Project[] = [
     description:
       "Exemplo de ficha de projecto dedicada à organização e capacitação das cooperativas de catadores.",
     area: "Organização cooperativa",
-    images: [{ src: reuniao, alt: "Reunião de cooperativa" }],
+    images: [],
     date: "2026",
     location: "Luanda",
     institutions: [],
@@ -174,7 +146,7 @@ export const projects: Project[] = [
     description:
       "Exemplo de ficha de projecto sobre sessões de sensibilização para a separação de resíduos.",
     area: "Sensibilização ambiental",
-    images: [{ src: sensibilizacao, alt: "Sessão de sensibilização" }],
+    images: [],
     date: "2026",
     location: "Luanda",
     institutions: [],
@@ -188,61 +160,11 @@ export const projects: Project[] = [
     description:
       "Exemplo de ficha de actividade sobre mobilização de jovens para a limpeza de ruas e zonas costeiras.",
     area: "Comunidade",
-    images: [{ src: limpeza, alt: "Acção de limpeza comunitária" }],
+    images: [],
     date: "2026",
     location: "Luanda",
     institutions: [],
     status: "concluido",
-    isDemo: true,
-  },
-];
-
-const photo = (id: string, src: string, alt: string, width = 1600, height = 1072) => ({
-  id,
-  src,
-  alt,
-  width,
-  height,
-});
-
-export const albums: PortfolioAlbum[] = [
-  {
-    id: "demo-album-1",
-    title: "Recolha e triagem",
-    description: "Álbum de exemplo com fotografias do trabalho de recolha e separação de materiais.",
-    category: "Recolha e triagem",
-    date: "2026",
-    location: "Luanda",
-    photos: [
-      photo("p1", catadores, "Catadores separam garrafas de plástico", 1600, 907),
-      photo("p2", fardos, "Fardos de plástico e cartão num parque de triagem"),
-    ],
-    videos: [],
-    isDemo: true,
-  },
-  {
-    id: "demo-album-2",
-    title: "Vida cooperativa",
-    description: "Álbum de exemplo sobre reuniões e organização das cooperativas.",
-    category: "Cooperativas",
-    date: "2026",
-    location: "Luanda",
-    photos: [photo("p3", reuniao, "Reunião de membros de cooperativa")],
-    videos: [],
-    isDemo: true,
-  },
-  {
-    id: "demo-album-3",
-    title: "Comunidade e ambiente",
-    description: "Álbum de exemplo com acções de limpeza e de sensibilização ambiental.",
-    category: "Comunidade",
-    date: "2026",
-    location: "Luanda",
-    photos: [
-      photo("p4", limpeza, "Voluntários em acção de limpeza junto ao mar"),
-      photo("p5", sensibilizacao, "Sessão de sensibilização sobre separação de resíduos"),
-    ],
-    videos: [],
     isDemo: true,
   },
 ];
