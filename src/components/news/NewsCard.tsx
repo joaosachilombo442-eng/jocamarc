@@ -171,6 +171,7 @@ export function FeaturedNews({
       ) : (
         <MediaPlaceholder
           size="lg"
+          variant="solid"
           showText={false}
           tone={CATEGORY_PLACEHOLDER[article.categorySlug] ?? "primary"}
           className="absolute inset-0 -z-10"
