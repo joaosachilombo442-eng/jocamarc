@@ -18,8 +18,14 @@ import reciclagemPapel from "@/assets/photos/contentor-reciclagem-papel.webp.ass
 import encontroArLivre from "@/assets/photos/encontro-ao-ar-livre.webp.asset.json";
 import encontroGabinete from "@/assets/photos/encontro-institucional-gabinete.webp.asset.json";
 import encontroSala from "@/assets/photos/encontro-institucional-sala.webp.asset.json";
+import equipaContentorRua from "@/assets/photos/campo-equipa-junto-contentor-rua.webp.asset.json";
+import tecnicaMunicipal from "@/assets/photos/campo-tecnica-municipal-catadores.webp.asset.json";
+import videoContentor from "@/assets/videos/catadores-junto-contentor.mp4.asset.json";
+import videoContentorCapa from "@/assets/videos/catadores-junto-contentor-capa.webp.asset.json";
+import videoTriciclos from "@/assets/videos/membro-ajocamarc-junto-triciclos.mp4.asset.json";
+import videoTriciclosCapa from "@/assets/videos/membro-ajocamarc-junto-triciclos-capa.webp.asset.json";
 
-import type { PortfolioAlbum, PortfolioPhoto } from "./types";
+import type { PortfolioAlbum, PortfolioPhoto, PortfolioVideo } from "./types";
 
 export type SitePhoto = PortfolioPhoto & { position: string };
 
@@ -129,7 +135,39 @@ export const photos = {
     1422,
     "50% 50%",
   ),
+  equipaContentorRua: p(
+    "equipa-contentor-rua",
+    equipaContentorRua,
+    "Membros da equipa caminham entre catadores e materiais recolhidos junto a um contentor, numa rua da cidade",
+    1200,
+    1600,
+    "50% 40%",
+  ),
+  tecnicaMunicipal: p(
+    "tecnica-municipal",
+    tecnicaMunicipal,
+    "Técnica de colete conversa com catadores junto a um contentor, enquanto um deles arruma cartão recolhido",
+    1200,
+    1600,
+    "50% 50%",
+  ),
 } satisfies Record<string, SitePhoto>;
+
+/** Original videos supplied by the association. Titles describe only what is visible. */
+export const videos = {
+  triciclos: {
+    id: "video-triciclos",
+    title: "Homem de colete refletor fala junto a triciclos carregados de sacos de materiais recolhidos",
+    url: videoTriciclos.url,
+    poster: videoTriciclosCapa.url,
+  },
+  contentor: {
+    id: "video-contentor",
+    title: "Catadores reunidos junto a um contentor e a materiais recolhidos",
+    url: videoContentor.url,
+    poster: videoContentorCapa.url,
+  },
+} satisfies Record<string, PortfolioVideo>;
 
 /** Portfolio albums built only from the photographs above. */
 export const albums: PortfolioAlbum[] = [
@@ -147,8 +185,10 @@ export const albums: PortfolioAlbum[] = [
       photos.registoRua,
       photos.conversaColete,
       photos.grupoEdificio,
+      photos.equipaContentorRua,
+      photos.tecnicaMunicipal,
     ],
-    videos: [],
+    videos: [videos.contentor],
   },
   {
     id: "album-recolha-e-transporte",
@@ -157,7 +197,7 @@ export const albums: PortfolioAlbum[] = [
       "Materiais recicláveis recolhidos e preparados para transporte. Data e local a confirmar pela AJOCAMARC.",
     category: "Recolha",
     photos: [photos.camiao],
-    videos: [],
+    videos: [videos.triciclos],
   },
   {
     id: "album-encontros",
