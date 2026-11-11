@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { site } from "@/config/site";
 import { listAlbums, listCooperatives, listNews, listPartners, listProjects, NEWS_PAGE_SIZE } from "@/content/api";
 import { photos } from "@/content/media";
-import { timeline } from "@/content/institutional";
+import { actionAreas, timeline } from "@/content/institutional";
 
 describe("Confirmed institutional facts", () => {
   it("the initiative started in Cacuaco in 2020", () => {
@@ -117,5 +117,14 @@ describe("Confirmed contacts and fiscal identity", () => {
       fiscalAddress: "Rua da 8.ª Esquadra, PR 28",
       taxOffice: "04.05 — RF Viana",
     });
+  });
+});
+
+describe("Activity cards use only original photographs", () => {
+  it("every area photo is one supplied by AJOCAMARC", () => {
+    const supplied = new Set(Object.values(photos).map((p) => p.src));
+    for (const area of actionAreas) {
+      if (area.photo) expect(supplied.has(area.photo.src)).toBe(true);
+    }
   });
 });
