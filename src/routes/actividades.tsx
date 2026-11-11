@@ -9,7 +9,7 @@ import { MediaPlaceholder, type PlaceholderTone } from "@/components/site/MediaP
 import { DemoBadge, DemoNotice, PageHeader, Reveal, SectionHeading } from "@/components/site/primitives";
 import { projectsQuery } from "@/content/api";
 import { photos } from "@/content/media";
-import { actionAreas, iconForArea } from "@/content/institutional";
+import { iconForArea } from "@/content/institutional";
 import type { ProjectStatus } from "@/content/types";
 import { cn } from "@/lib/utils";
 
@@ -58,7 +58,7 @@ function ActivitiesPage() {
       <section className="container-site py-20 md:py-24">
         <SectionHeading
           eyebrow="Áreas de intervenção"
-          title={`${actionAreas.length === 5 ? "Cinco" : actionAreas.length} frentes de trabalho`}
+          title="Cinco frentes de trabalho"
           description="Fotografias originais do trabalho da AJOCAMARC no terreno. Onde ainda não há fotografia adequada, mostramos um painel institucional até recebermos o material."
         />
         <ActivityGrid />
