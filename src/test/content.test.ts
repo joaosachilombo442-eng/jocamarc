@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { site } from "@/config/site";
 import { listAlbums, listCooperatives, listNews, listPartners, listProjects, NEWS_PAGE_SIZE } from "@/content/api";
 import { photos } from "@/content/media";
-import { timeline } from "@/content/institutional";
+import { actionAreas, timeline } from "@/content/institutional";
 
 describe("Confirmed institutional facts", () => {
   it("the initiative started in Cacuaco in 2020", () => {
@@ -33,9 +33,12 @@ describe("No invented institutional data", () => {
     expect(await listPartners()).toEqual([]);
   });
 
-  it("contacts and social profiles stay empty until confirmed", () => {
-    expect(Object.values(site.contacts).every((v) => v === null)).toBe(true);
-    expect(Object.values(site.social).every((v) => v === null)).toBe(true);
+  it("e-mail, hours and unconfirmed social profiles stay empty", () => {
+    expect(site.contacts.email).toBeNull();
+    expect(site.contacts.hours).toBeNull();
+    expect(site.social.instagram).toBeNull();
+    expect(site.social.linkedin).toBeNull();
+    expect(site.social.youtube).toBeNull();
   });
 
   it("every sample news item is flagged as demonstration", async () => {
@@ -78,5 +81,50 @@ describe("Only original AJOCAMARC photographs", () => {
     expect(items.every((n) => n.coverImage === null)).toBe(true);
     const projects = await listProjects();
     expect(projects.filter((p) => p.isDemo).every((p) => p.images.length === 0)).toBe(true);
+  });
+});
+
+describe("Confirmed contacts and fiscal identity", () => {
+  it("lists exactly the two supplied phone numbers, dialable", () => {
+    expect(site.contacts.phones).toEqual([
+      { display: "+244 929 624 857", tel: "+244929624857" },
+      { display: "+244 923 266 385", tel: "+244923266385" },
+    ]);
+  });
+
+  it("uses the WhatsApp group invite, not a direct-chat link", () => {
+    expect(site.community.whatsappGroup).toBe(
+      "https://chat.whatsapp.com/D3j8UAqhhNDKifPxIASFR5?s=cl&p=i&mlu=4&ilr=4&iam=2",
+    );
+    expect(site.community.whatsappLabel).toBe("Junte-se à comunidade AJOCAMARC");
+  });
+
+  it("uses the exact Facebook link", () => {
+    expect(site.community.facebook).toBe("https://www.facebook.com/share/p/1ExtsxdeqQ/?mibextid=wwXIfr");
+    expect(site.community.facebookLabel).toBe("Acompanhe a AJOCAMARC no Facebook");
+  });
+
+  it("keeps the location references separate from the fiscal address", () => {
+    expect(site.locations).toEqual(["Zango 4, Município do Calumbo", "Casa da Juventude, Viana, Luanda"]);
+    expect(site.locations).not.toContain(site.legal.fiscalAddress);
+  });
+
+  it("carries the supplied fiscal data", () => {
+    expect(site.legal).toEqual({
+      legalForm: "Associação",
+      nif: "5001153617",
+      fiscalRegistrationDate: "05/09/2022",
+      fiscalAddress: "Rua da 8.ª Esquadra, PR 28",
+      taxOffice: "04.05 — RF Viana",
+    });
+  });
+});
+
+describe("Activity cards use only original photographs", () => {
+  it("every area photo is one supplied by AJOCAMARC", () => {
+    const supplied = new Set(Object.values(photos).map((p) => p.src));
+    for (const area of actionAreas) {
+      if (area.photo) expect(supplied.has(area.photo.src)).toBe(true);
+    }
   });
 });

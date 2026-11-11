@@ -4,6 +4,7 @@ import { ArrowRight, MapPin } from "lucide-react";
 
 import { FeaturedNews, NewsCard } from "@/components/news/NewsCard";
 import { CtaBand } from "@/components/site/CtaBand";
+import { ActivityGrid } from "@/components/site/ActivityCards";
 import { MediaPlaceholder, type PlaceholderTone } from "@/components/site/MediaPlaceholder";
 import { PartnerSlots } from "@/components/site/PartnerSlots";
 import { DemoBadge, Reveal, SectionHeading } from "@/components/site/primitives";
@@ -17,7 +18,7 @@ import {
   projectsQuery,
 } from "@/content/api";
 import { photos } from "@/content/media";
-import { actionAreas, toneClasses } from "@/content/institutional";
+import { iconForArea } from "@/content/institutional";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -189,20 +190,7 @@ function Areas() {
         title="Onde concentramos o nosso trabalho"
         description="Da recolha nas ruas à organização em cooperativas, o trabalho dos jovens catadores contribui para cidades mais limpas e para uma economia mais circular."
       />
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {actionAreas.map((a, i) => (
-          <Reveal as="li" key={a.title} delay={i * 70}>
-            <div className="group relative h-full overflow-hidden rounded-xl border bg-card p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
-              <span className={`absolute inset-x-0 top-0 h-1 ${toneClasses[a.tone].solid}`} aria-hidden />
-              <span className={`mb-6 grid h-12 w-12 place-items-center rounded-lg ${toneClasses[a.tone].soft}`}>
-                <a.Icon className="size-6" />
-              </span>
-              <h3 className="text-xl font-semibold">{a.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{a.description}</p>
-            </div>
-          </Reveal>
-        ))}
-      </ul>
+      <ActivityGrid />
     </section>
   );
 }
@@ -245,7 +233,7 @@ function ProjectsPreview() {
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
-                    <MediaPlaceholder label={p.area} tone={PROJECT_TONES[i % PROJECT_TONES.length] ?? "primary"} />
+                    <MediaPlaceholder label={p.area} Icon={iconForArea(p.area)} tone={PROJECT_TONES[i % PROJECT_TONES.length] ?? "primary"} />
                   )}
                 </div>
                 <div className="p-6">

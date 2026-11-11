@@ -2,7 +2,9 @@
  * Institutional texts. Only confirmed facts are written here; everything else is `null`
  * and renders as an editable placeholder until the association provides the official wording.
  */
-import { Handshake, Recycle, Sprout, UsersRound, type LucideIcon } from "lucide-react";
+import { Handshake, Megaphone, Recycle, Sprout, UsersRound, type LucideIcon } from "lucide-react";
+
+import { photos, type SitePhoto } from "./media";
 
 export type TimelineEvent = {
   year: string;
@@ -51,35 +53,55 @@ export type ActionArea = {
   description: string;
   Icon: LucideIcon;
   tone: "primary" | "accent" | "blue" | "red";
+  /** Original AJOCAMARC photo that shows this kind of work; null until a fitting photo is supplied. */
+  photo: SitePhoto | null;
 };
 
 /** Thematic areas derived from the association's purpose (name and identity). */
 export const actionAreas: ActionArea[] = [
   {
     title: "Recolha e triagem",
-    description: "Recolha, separação e encaminhamento de materiais recicláveis pelos jovens catadores.",
+    description: "Recolha, separação e organização de materiais recicláveis pelos jovens catadores.",
     Icon: Recycle,
     tone: "primary",
+    photo: photos.triagemCartao,
   },
   {
     title: "Organização cooperativa",
-    description: "Apoio à organização dos catadores em cooperativas, para um trabalho mais digno e estruturado.",
+    description: "Reuniões e trabalho colectivo para organizar os catadores em cooperativas, com mais dignidade e estrutura.",
     Icon: Handshake,
     tone: "accent",
+    photo: photos.encontroArLivre,
+  },
+  {
+    title: "Sensibilização ambiental",
+    description: "Informação e educação comunitária sobre a separação de resíduos e a reciclagem.",
+    Icon: Megaphone,
+    tone: "blue",
+    photo: null,
   },
   {
     title: "Inclusão social e juventude",
     description: "Valorização do trabalho dos jovens catadores e da sua participação na sociedade.",
     Icon: UsersRound,
-    tone: "blue",
+    tone: "red",
+    photo: photos.grupoEdificio,
   },
   {
     title: "Economia circular",
     description: "Promoção da reutilização e da reciclagem como caminho para o desenvolvimento sustentável.",
     Icon: Sprout,
-    tone: "red",
+    tone: "primary",
+    photo: photos.camiao,
   },
 ];
+
+/** Icon for a project/news area label, falling back to the recycling symbol. */
+export function iconForArea(area: string): LucideIcon {
+  const match = actionAreas.find((a) => a.title.toLowerCase() === area.toLowerCase());
+  if (match) return match.Icon;
+  return area.toLowerCase() === "comunidade" ? UsersRound : Recycle;
+}
 
 export const toneClasses: Record<ActionArea["tone"], { soft: string; solid: string }> = {
   primary: { soft: "bg-primary-soft text-primary", solid: "bg-primary" },

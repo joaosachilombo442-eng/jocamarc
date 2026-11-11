@@ -3,12 +3,13 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Building2, Calendar, MapPin } from "lucide-react";
 import { useState } from "react";
 
+import { ActivityGrid } from "@/components/site/ActivityCards";
 import { CtaBand } from "@/components/site/CtaBand";
 import { MediaPlaceholder, type PlaceholderTone } from "@/components/site/MediaPlaceholder";
 import { DemoBadge, DemoNotice, PageHeader, Reveal, SectionHeading } from "@/components/site/primitives";
 import { projectsQuery } from "@/content/api";
 import { photos } from "@/content/media";
-import { actionAreas, toneClasses } from "@/content/institutional";
+import { iconForArea } from "@/content/institutional";
 import type { ProjectStatus } from "@/content/types";
 import { cn } from "@/lib/utils";
 
@@ -55,18 +56,12 @@ function ActivitiesPage() {
       />
 
       <section className="container-site py-20 md:py-24">
-        <SectionHeading eyebrow="Áreas de intervenção" title="Quatro frentes de trabalho" />
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {actionAreas.map((a, i) => (
-            <Reveal as="li" key={a.title} delay={i * 70} className="rounded-xl border bg-card p-6 shadow-soft">
-              <span className={`mb-5 grid h-11 w-11 place-items-center rounded-lg ${toneClasses[a.tone].soft}`}>
-                <a.Icon className="size-5" />
-              </span>
-              <h3 className="text-lg font-semibold">{a.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a.description}</p>
-            </Reveal>
-          ))}
-        </ul>
+        <SectionHeading
+          eyebrow="Áreas de intervenção"
+          title="Cinco frentes de trabalho"
+          description="Fotografias originais do trabalho da AJOCAMARC no terreno. Onde ainda não há fotografia adequada, mostramos um painel institucional até recebermos o material."
+        />
+        <ActivityGrid />
       </section>
 
       <section className="bg-secondary py-20 md:py-24">
@@ -118,7 +113,7 @@ function ActivitiesPage() {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <MediaPlaceholder label={p.area} tone={PLACEHOLDER_TONES[i % PLACEHOLDER_TONES.length] ?? "primary"} className="min-h-48" />
+                      <MediaPlaceholder label={p.area} Icon={iconForArea(p.area)} tone={PLACEHOLDER_TONES[i % PLACEHOLDER_TONES.length] ?? "primary"} className="min-h-48" />
                     )}
                   </div>
                   <div className="flex flex-col p-6">

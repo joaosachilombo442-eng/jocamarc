@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Clock, Mail, MapPin, Phone, Send } from "lucide-react";
+import { Clock, ExternalLink, FileText, Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { CommunityButtons, PhoneLinks } from "@/components/site/CommunityButtons";
 import { PageHeader } from "@/components/site/primitives";
-import { SocialLinks } from "@/components/site/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,10 +19,10 @@ export const Route = createFileRoute("/contactos")({
       { title: "Contactos — AJOCAMARC" },
       {
         name: "description",
-        content: "Entre em contacto com a AJOCAMARC — Associação dos Jovens Catadores de Materiais Recicláveis de Angola.",
+        content: "Telefones, localizações, comunidade no WhatsApp e identificação institucional da AJOCAMARC — Associação dos Jovens Catadores de Materiais Recicláveis de Angola.",
       },
       { property: "og:title", content: "Contactos — AJOCAMARC" },
-      { property: "og:description", content: "Fale com a AJOCAMARC." },
+      { property: "og:description", content: "Telefones, localizações e comunidade da AJOCAMARC." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -72,11 +72,14 @@ function ContactPage() {
     }
   };
 
-  const info = [
-    { Icon: Phone, label: "Telefone", value: site.contacts.phone, href: site.contacts.phone ? `tel:${site.contacts.phone}` : null },
-    { Icon: Mail, label: "E-mail", value: site.contacts.email, href: site.contacts.email ? `mailto:${site.contacts.email}` : null },
-    { Icon: MapPin, label: "Endereço", value: site.contacts.address, href: null },
-    { Icon: Clock, label: "Horário", value: site.contacts.hours, href: null },
+  const legal = [
+    { label: "Nome", value: site.fullName },
+    { label: "Sigla", value: site.shortName },
+    { label: "Natureza jurídica", value: site.legal.legalForm },
+    { label: "NIF", value: site.legal.nif },
+    { label: "Data de registo fiscal", value: site.legal.fiscalRegistrationDate },
+    { label: "Domicílio fiscal", value: site.legal.fiscalAddress },
+    { label: "Repartição fiscal", value: site.legal.taxOffice },
   ];
 
   return (
@@ -91,31 +94,39 @@ function ContactPage() {
       <section className="container-site grid gap-12 py-16 md:py-20 lg:grid-cols-[1fr_1.3fr]">
         <div className="space-y-8">
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-            {info.map(({ Icon, label, value, href }) => (
-              <li key={label} className="flex items-start gap-4 rounded-xl border bg-card p-5 shadow-soft">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-primary-soft text-primary">
-                  <Icon className="size-5" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
-                  {value ? (
-                    href ? (
-                      <a href={href} className="mt-1 block font-medium hover:text-primary">
-                        {value}
-                      </a>
-                    ) : (
-                      <p className="mt-1 font-medium">{value}</p>
-                    )
-                  ) : (
-                    <p className="mt-1 italic text-muted-foreground">{PENDING_LABEL}</p>
-                  )}
-                </div>
-              </li>
-            ))}
+            <InfoCard Icon={Phone} label="Telefone">
+              <PhoneLinks className="mt-1" linkClassName="hover:text-primary" />
+            </InfoCard>
+            <InfoCard Icon={MapPin} label="Onde estamos">
+              <ul className="mt-1 space-y-1.5">
+                {site.locations.map((l) => (
+                  <li key={l} className="font-medium">
+                    {l}
+                  </li>
+                ))}
+              </ul>
+            </InfoCard>
+            <InfoCard Icon={Mail} label="E-mail">
+              {site.contacts.email ? (
+                <a href={`mailto:${site.contacts.email}`} className="mt-1 block font-medium hover:text-primary">
+                  {site.contacts.email}
+                </a>
+              ) : (
+                <p className="mt-1 italic text-muted-foreground">{PENDING_LABEL}</p>
+              )}
+            </InfoCard>
+            <InfoCard Icon={Clock} label="Horário">
+              <p className={site.contacts.hours ? "mt-1 font-medium" : "mt-1 italic text-muted-foreground"}>
+                {site.contacts.hours ?? PENDING_LABEL}
+              </p>
+            </InfoCard>
           </ul>
-          <div>
-            <p className="mb-3 text-sm font-semibold">Redes sociais</p>
-            <SocialLinks />
+          <div className="rounded-xl border bg-primary-soft p-5">
+            <p className="mb-1 text-sm font-semibold">Comunidade AJOCAMARC</p>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Junte-se ao grupo no WhatsApp e acompanhe as nossas publicações no Facebook.
+            </p>
+            <CommunityButtons stacked size="default" />
           </div>
         </div>
 
@@ -148,18 +159,43 @@ function ContactPage() {
         </form>
       </section>
 
-      <section className="container-site pb-20">
-        <div className="overflow-hidden rounded-2xl border shadow-soft">
-          <iframe
-            title={`Mapa — ${site.map.label}`}
-            src={`https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(site.map.bbox)}&layer=mapnik&marker=${encodeURIComponent(site.map.marker)}`}
-            loading="lazy"
-            className="h-[26rem] w-full border-0"
-          />
-          <p className="flex items-center gap-2 border-t bg-secondary px-5 py-3 text-sm text-muted-foreground">
-            <MapPin className="size-4 text-accent" />
-            Mapa indicativo — {site.map.label}, local de origem da iniciativa. Endereço oficial a confirmar.
+      <section className="container-site grid gap-6 pb-20 lg:grid-cols-[1.3fr_1fr]">
+        <div className="rounded-2xl border bg-card p-6 shadow-soft sm:p-8">
+          <h2 className="flex items-center gap-2 text-xl font-bold">
+            <MapPin className="size-5 text-accent" /> Referências de localização
+          </h2>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+            {site.locations.map((l) => (
+              <li key={l} className="flex flex-col justify-between gap-4 rounded-xl bg-secondary p-5">
+                <p className="font-semibold leading-snug">{l}</p>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(l)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                >
+                  Procurar no mapa <ExternalLink className="size-3.5" />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-xs text-muted-foreground">
+            Referências indicadas pela AJOCAMARC. A pesquisa no mapa é feita pelo nome do local.
           </p>
+        </div>
+
+        <div className="rounded-2xl border bg-secondary p-6 sm:p-8">
+          <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+            <FileText className="size-4" /> Identificação institucional
+          </h2>
+          <dl className="mt-5 grid gap-3 text-sm">
+            {legal.map((row) => (
+              <div key={row.label} className="grid grid-cols-[9.5rem_minmax(0,1fr)] gap-3 border-b border-border/70 pb-3 last:border-0 last:pb-0">
+                <dt className="text-muted-foreground">{row.label}</dt>
+                <dd className="font-medium">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
     </>
@@ -187,5 +223,27 @@ function Field({
         </p>
       )}
     </div>
+  );
+}
+
+function InfoCard({
+  Icon,
+  label,
+  children,
+}: {
+  Icon: typeof Phone;
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <li className="flex items-start gap-4 rounded-xl border bg-card p-5 shadow-soft">
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-primary-soft text-primary">
+        <Icon className="size-5" />
+      </span>
+      <div className="min-w-0">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
+        {children}
+      </div>
+    </li>
   );
 }
