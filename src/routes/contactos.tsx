@@ -6,7 +6,6 @@ import { z } from "zod";
 
 import { CommunityButtons, PhoneLinks } from "@/components/site/CommunityButtons";
 import { PageHeader } from "@/components/site/primitives";
-import { SocialLinks } from "@/components/site/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
