@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
  * The two community links supplied by the association: the WhatsApp GROUP invite and
  * the Facebook link. Both open externally, with the exact URLs from site config.
  */
+const WRAP = { default: "h-auto min-h-9 whitespace-normal py-2 text-center", lg: "h-auto min-h-12 whitespace-normal py-3 text-center" };
+
 export function CommunityButtons({
   tone = "light",
   size = "lg",
@@ -22,7 +24,7 @@ export function CommunityButtons({
 }) {
   return (
     <div className={cn("flex flex-col gap-3", !stacked && "sm:flex-row sm:flex-wrap", className)}>
-      <Button asChild variant="cta" size={size} className="whitespace-normal text-left">
+      <Button asChild variant="cta" size={size} className={WRAP[size]}>
         <a href={site.community.whatsappGroup} target="_blank" rel="noopener noreferrer">
           <MessageCircle />
           {site.community.whatsappLabel}
@@ -32,7 +34,7 @@ export function CommunityButtons({
         asChild
         variant={tone === "dark" ? "outline-light" : "outline-brand"}
         size={size}
-        className="whitespace-normal text-left"
+        className={WRAP[size]}
       >
         <a href={site.community.facebook} target="_blank" rel="noopener noreferrer">
           <Facebook />
