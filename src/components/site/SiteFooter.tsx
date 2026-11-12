@@ -23,7 +23,7 @@ export function SiteFooter() {
             uma iniciativa em {site.origin.place}, em {site.origin.year}, foi constituída em{" "}
             {site.foundedYear}.
           </p>
-          <CommunityButtons tone="dark" size="default" stacked className="max-w-xs" />
+          <CommunityButtons tone="dark" size="default" stacked className="max-w-sm" />
         </div>
 
         <div>
