@@ -42,10 +42,49 @@ export const timeline: TimelineEvent[] = [
   },
 ];
 
+/** Official wording supplied by AJOCAMARC. Values and principles are names only — no descriptions were supplied. */
 export const missionVisionValues = {
-  mission: null as string | null,
-  vision: null as string | null,
-  values: [] as { title: string; description: string }[],
+  mission:
+    "Promover a organização, representação, dignificação e inclusão socioeconómica dos catadores de materiais recicláveis em Angola, através do associativismo, formação profissional, fortalecimento das cooperativas, empreendedorismo verde e valorização dos resíduos.",
+  vision:
+    "Ser uma organização nacional de referência e reconhecimento internacional, contribuindo para uma Angola mais limpa, inclusiva e sustentável.",
+  values: [
+    "Dignidade humana",
+    "Inclusão social",
+    "Solidariedade",
+    "Transparência",
+    "Responsabilidade ambiental",
+    "Empreendedorismo",
+    "Compromisso social",
+    "Participação democrática",
+    "Inovação",
+    "Integridade",
+    "Igualdade de oportunidades",
+    "Cooperação institucional",
+  ],
+  principles: [
+    "Justiça social",
+    "Democracia participativa",
+    "Legalidade",
+    "Igualdade",
+    "Protecção ambiental",
+    "Economia circular",
+    "Cooperação",
+    "Valorização dos catadores",
+  ],
+  objectives: [
+    "Representar e organizar os catadores",
+    "Fortalecer as cooperativas",
+    "Promover a formação profissional",
+    "Criar oportunidades de emprego e rendimento",
+    "Incentivar negócios verdes",
+    "Promover a educação ambiental",
+    "Estimular o empreendedorismo",
+    "Apoiar a inovação",
+    "Desenvolver parcerias nacionais e internacionais",
+  ],
+  commitment:
+    "Transformar a actividade dos catadores numa actividade económica organizada, reconhecida, dignificada e sustentável.",
 };
 
 export type ActionArea = {
