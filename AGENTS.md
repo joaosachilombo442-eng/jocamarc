@@ -31,10 +31,12 @@ use the editor.
 
 ## Project rules
 
-- All page content (news, projects, portfolio, cooperatives, partners) is read through `src/content/api.ts` query functions + `queryOptions`; pages never hard-code it. Why: the future admin panel (Lovable Cloud) replaces only those function bodies.
+- All page content (news, events, projects, portfolio, cooperatives, partners) is read through `src/content/api.ts` query functions + `queryOptions`; pages never hard-code it. Why: the future admin panel (Lovable Cloud) replaces only those function bodies.
 - Unconfirmed institutional fields are `null` in `src/config/site.ts` / `src/content/institutional.ts` and render as "A confirmar" / `PendingContent` slots. Why: the client forbids invented data.
 - Sample items carry `isDemo: true` and show `DemoBadge`/`DemoNotice`. Why: keeps demo content visibly distinct from official publications.
 - Brand colours live as tokens in `src/styles.css` (primary/accent/brand-blue/brand-red/brand-yellow/ink); components use only those tokens. Why: one place to keep the logo palette consistent.
-- Every photograph comes from `src/content/media.ts` (CDN pointers of originals supplied by the association); demo items carry no photo and render `MediaPlaceholder`. Why: generated/stock imagery is forbidden and real photos must never illustrate invented events.
+- Every photograph, cooperative logo and event flyer comes from `src/content/media.ts` (CDN pointers of originals supplied by the association); demo items carry no photo and render `MediaPlaceholder`. Why: generated/stock imagery is forbidden and real photos must never illustrate invented events.
 - Confirmed contacts, community links (WhatsApp group, Facebook), locations and fiscal data live only in `src/config/site.ts` and are rendered via `CommunityButtons`/`PhoneLinks`; tests pin the exact values. Why: one source for the client-supplied data, so links are never retyped or altered.
 - Area-of-work cards (`ActivityCards`) may show an original photo of that kind of work; example projects/news never get a photo. Why: real photos may illustrate real work, never invented events.
+- Confirmed records live in their own source files (`src/content/cooperatives.ts`, `events.ts`, `news.ts`); a field the association has not supplied is `null` and renders "A confirmar". Why: lets the admin panel replace each source without touching pages, and keeps unsupplied data visibly pending.
+- Renamed public URLs keep a 301 redirect route at the old path (e.g. `/historia`, `/cooperativas-parceiros`). Why: the site is published and old links must keep working.
