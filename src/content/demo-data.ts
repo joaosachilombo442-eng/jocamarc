@@ -4,12 +4,12 @@
  * Nothing in this file is an official AJOCAMARC publication. Every item carries
  * `isDemo: true` and renders with an "Exemplo" badge. It will be replaced by
  * content managed in the future admin panel (see src/content/api.ts).
- * Cooperatives and partners are intentionally left unnamed until confirmed.
+ * Only example projects remain here; partners stay empty until confirmed.
  *
  * Demo items carry NO photographs: the association's real photos (src/content/media.ts)
  * must never illustrate an invented event, so these render a typographic placeholder.
  */
-import type { Cooperative, NewsArticle, NewsCategory, Partner, Project } from "./types";
+import type { Partner, Project } from "./types";
 
 export const projects: Project[] = [
   {
@@ -70,15 +70,6 @@ export const projects: Project[] = [
   },
 ];
 
-/** The five cooperatives constituted in 2021. Names and details await confirmation. */
-export const cooperatives: Cooperative[] = Array.from({ length: 5 }, (_, i) => ({
-  id: `cooperative-${i + 1}`,
-  name: null,
-  foundedYear: 2021,
-  location: null,
-  description: null,
-  logo: null,
-}));
 
 /** No partner is published until confirmed by the association. */
 export const partners: Partner[] = [];
