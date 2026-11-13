@@ -8,9 +8,12 @@
  */
 import { queryOptions } from "@tanstack/react-query";
 
+import * as coopSource from "./cooperatives";
 import * as source from "./demo-data";
+import * as eventSource from "./events";
 import * as media from "./media";
-import type { ContactMessage, NewsArticle } from "./types";
+import * as newsSource from "./news";
+import type { ContactMessage, Cooperative, EventItem, NewsArticle } from "./types";
 
 export const NEWS_PAGE_SIZE = 6;
 
@@ -29,7 +32,13 @@ export type NewsListResult = {
   pageCount: number;
 };
 
-const byDateDesc = (a: NewsArticle, b: NewsArticle) => b.publishedAt.localeCompare(a.publishedAt);
+/** Newest first; items still awaiting a confirmed date keep their editorial order at the top. */
+const byDateDesc = (a: NewsArticle, b: NewsArticle) => {
+  if (a.publishedAt === b.publishedAt) return 0;
+  if (a.publishedAt === null) return -1;
+  if (b.publishedAt === null) return 1;
+  return b.publishedAt.localeCompare(a.publishedAt);
+};
 
 const normalise = (s: string) =>
   s
@@ -39,9 +48,9 @@ const normalise = (s: string) =>
 
 export async function listNews(params: NewsListParams = {}): Promise<NewsListResult> {
   const { q, category, month } = params;
-  let items = [...source.news].sort(byDateDesc);
+  let items = [...newsSource.news].sort(byDateDesc);
   if (category) items = items.filter((n) => n.categorySlug === category);
-  if (month) items = items.filter((n) => n.publishedAt.startsWith(month));
+  if (month) items = items.filter((n) => n.publishedAt?.startsWith(month));
   if (q && q.trim()) {
     const needle = normalise(q.trim());
     items = items.filter((n) => normalise(`${n.title} ${n.excerpt}`).includes(needle));
@@ -54,20 +63,20 @@ export async function listNews(params: NewsListParams = {}): Promise<NewsListRes
 }
 
 export async function getFeaturedNews(): Promise<NewsArticle | null> {
-  const sorted = [...source.news].sort(byDateDesc);
+  const sorted = [...newsSource.news].sort(byDateDesc);
   return sorted.find((n) => n.featured) ?? sorted[0] ?? null;
 }
 
 export async function getLatestNews(limit = 3): Promise<NewsArticle[]> {
-  return [...source.news].sort(byDateDesc).slice(0, limit);
+  return [...newsSource.news].sort(byDateDesc).slice(0, limit);
 }
 
 export async function getNewsBySlug(slug: string): Promise<NewsArticle | null> {
-  return source.news.find((n) => n.slug === slug) ?? null;
+  return newsSource.news.find((n) => n.slug === slug) ?? null;
 }
 
 export async function getRelatedNews(article: NewsArticle, limit = 3): Promise<NewsArticle[]> {
-  const others = [...source.news].filter((n) => n.id !== article.id).sort(byDateDesc);
+  const others = [...newsSource.news].filter((n) => n.id !== article.id).sort(byDateDesc);
   const same = others.filter((n) => n.categorySlug === article.categorySlug);
   return [...same, ...others.filter((n) => n.categorySlug !== article.categorySlug)].slice(
     0,
@@ -77,7 +86,8 @@ export async function getRelatedNews(article: NewsArticle, limit = 3): Promise<N
 
 export async function getNewsArchive(): Promise<{ month: string; count: number }[]> {
   const counts = new Map<string, number>();
-  for (const n of source.news) {
+  for (const n of newsSource.news) {
+    if (!n.publishedAt) continue;
     const m = n.publishedAt.slice(0, 7);
     counts.set(m, (counts.get(m) ?? 0) + 1);
   }
@@ -87,7 +97,7 @@ export async function getNewsArchive(): Promise<{ month: string; count: number }
 }
 
 export async function listNewsCategories() {
-  return source.newsCategories;
+  return newsSource.newsCategories;
 }
 
 export async function listProjects() {
@@ -98,8 +108,45 @@ export async function listAlbums() {
   return media.albums;
 }
 
-export async function listCooperatives() {
-  return source.cooperatives;
+export type CooperativeListParams = {
+  q?: string | undefined;
+  /** Exact location label, or PENDING_LOCATION for cooperatives whose location is not confirmed. */
+  location?: string | undefined;
+};
+
+/** Filter value for cooperatives whose location has not been confirmed yet. */
+export const PENDING_LOCATION = "a-confirmar";
+
+export async function listCooperatives(params: CooperativeListParams = {}): Promise<Cooperative[]> {
+  let items = [...coopSource.cooperatives];
+  if (params.location === PENDING_LOCATION) items = items.filter((c) => !c.location);
+  else if (params.location) items = items.filter((c) => c.location === params.location);
+  if (params.q && params.q.trim()) {
+    const needle = normalise(params.q.trim());
+    items = items.filter((c) =>
+      normalise(`${c.name} ${c.fullName ?? ""} ${c.acronym ?? ""}`).includes(needle),
+    );
+  }
+  return items;
+}
+
+export async function listCooperativeLocations(): Promise<string[]> {
+  const set = new Set(coopSource.cooperatives.flatMap((c) => (c.location ? [c.location] : [])));
+  return [...set].sort((a, b) => a.localeCompare(b, "pt"));
+}
+
+export async function getCooperativeBySlug(slug: string): Promise<Cooperative | null> {
+  return coopSource.cooperatives.find((c) => c.slug === slug) ?? null;
+}
+
+/** Events, most recent first; events without a confirmed date go last. */
+export async function listEvents(): Promise<EventItem[]> {
+  return [...eventSource.events].sort((a, b) => {
+    if (a.date === b.date) return 0;
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return b.date.localeCompare(a.date);
+  });
 }
 
 export async function listPartners() {
@@ -137,7 +184,15 @@ export const projectsQuery = () => queryOptions({ queryKey: ["projects"], queryF
 
 export const albumsQuery = () => queryOptions({ queryKey: ["albums"], queryFn: listAlbums });
 
-export const cooperativesQuery = () =>
-  queryOptions({ queryKey: ["cooperatives"], queryFn: listCooperatives });
+export const cooperativesQuery = (params: CooperativeListParams = {}) =>
+  queryOptions({ queryKey: ["cooperatives", "list", params], queryFn: () => listCooperatives(params) });
+
+export const cooperativeLocationsQuery = () =>
+  queryOptions({ queryKey: ["cooperatives", "locations"], queryFn: listCooperativeLocations });
+
+export const cooperativeBySlugQuery = (slug: string) =>
+  queryOptions({ queryKey: ["cooperatives", "slug", slug], queryFn: () => getCooperativeBySlug(slug) });
+
+export const eventsQuery = () => queryOptions({ queryKey: ["events"], queryFn: listEvents });
 
 export const partnersQuery = () => queryOptions({ queryKey: ["partners"], queryFn: listPartners });
