@@ -25,7 +25,17 @@ import videoContentorCapa from "@/assets/videos/catadores-junto-contentor-capa.w
 import videoTriciclos from "@/assets/videos/membro-ajocamarc-junto-triciclos.mp4.asset.json";
 import videoTriciclosCapa from "@/assets/videos/membro-ajocamarc-junto-triciclos-capa.webp.asset.json";
 
-import type { PortfolioAlbum, PortfolioPhoto, PortfolioVideo } from "./types";
+import logoDilangangu from "@/assets/cooperativas/dilangangu-kuanzambi-logotipo.webp.asset.json";
+import logoFundaUmpare from "@/assets/cooperativas/funda-umpare-cafl-logotipo.webp.asset.json";
+import logoBatalhadores from "@/assets/cooperativas/jovens-batalhadores-de-angola-logotipo.webp.asset.json";
+import logoKuyelissa from "@/assets/cooperativas/kuyelissa-logotipo.webp.asset.json";
+import logoLusevikueno from "@/assets/cooperativas/lusevikueno-kaka-logotipo.webp.asset.json";
+import logoMbongoPaxi from "@/assets/cooperativas/mbongo-paxi-logotipo.webp.asset.json";
+import logoNakulima from "@/assets/cooperativas/nakulima-csbn-logotipo.webp.asset.json";
+import logoRaizes from "@/assets/cooperativas/raizes-4as-logotipo.webp.asset.json";
+import flyerDande from "@/assets/eventos/conferencia-municipal-dande-cartaz.webp.asset.json";
+
+import type { CooperativeLogo, EventFlyer, PortfolioAlbum, PortfolioPhoto, PortfolioVideo } from "./types";
 
 export type SitePhoto = PortfolioPhoto & { position: string };
 
@@ -209,3 +219,34 @@ export const albums: PortfolioAlbum[] = [
     videos: [],
   },
 ];
+
+/* ---------- Cooperative logos (supplied by AJOCAMARC, used as-is) ---------- */
+
+const logo = (asset: { url: string }, name: string, width: number, height: number): CooperativeLogo => ({
+  src: asset.url,
+  alt: `Logótipo da cooperativa ${name}`,
+  width,
+  height,
+});
+
+export const cooperativeLogos = {
+  mbongoPaxi: logo(logoMbongoPaxi, "Mbongo Paxi", 425, 425),
+  dilangangu: logo(logoDilangangu, "Dilangangu Kuanzambi", 618, 538),
+  nakulima: logo(logoNakulima, "Nakulima (CSBN)", 800, 566),
+  batalhadores: logo(logoBatalhadores, "Jovens Batalhadores de Angola", 768, 591),
+  fundaUmpare: logo(logoFundaUmpare, "Funda Umpare (CAFL)", 800, 565),
+  lusevikueno: logo(logoLusevikueno, "Lusevikueno Kaka", 509, 509),
+  raizes: logo(logoRaizes, "Raízes 4As", 800, 642),
+  kuyelissa: logo(logoKuyelissa, "Kuyelissa", 800, 566),
+} satisfies Record<string, CooperativeLogo>;
+
+/* ---------- Event flyers (supplied by AJOCAMARC) ---------- */
+
+export const flyers = {
+  conferenciaDande: {
+    src: flyerDande.url,
+    alt: "Cartaz da I Conferência Municipal do Dande — Gestão de Resíduos e Desenvolvimento Local, 30 de Outubro de 2026, no Dande",
+    width: 1600,
+    height: 639,
+  },
+} satisfies Record<string, EventFlyer>;

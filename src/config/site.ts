@@ -13,6 +13,8 @@ export const site = {
   origin: { year: 2020, place: "Cacuaco" },
   foundedYear: 2021,
   cooperativesFounded: 5,
+  /** Cooperatives currently associated with AJOCAMARC; registered on the site progressively. */
+  cooperativesAssociated: 150,
 
   contacts: {
     /** Confirmed by the association. `tel` is the dialable form used in tel: links. */
@@ -54,11 +56,11 @@ export const site = {
 
 export const mainNav = [
   { to: "/", label: "Início", full: "Início" },
-  { to: "/historia", label: "História", full: "História da AJOCAMARC" },
+  { to: "/sobre-nos", label: "Sobre Nós", full: "Sobre Nós" },
   { to: "/missao-visao-valores", label: "Missão", full: "Missão, Visão e Valores" },
   { to: "/actividades", label: "Actividades", full: "Actividades e Projectos" },
-  { to: "/cooperativas-parceiros", label: "Cooperativas", full: "Cooperativas e Parceiros" },
-  { to: "/noticias", label: "Notícias", full: "Notícias e Actualidade" },
+  { to: "/cooperativas", label: "Cooperativas", full: "Cooperativas Integradas" },
+  { to: "/noticias", label: "Notícias e Eventos", full: "Notícias e Eventos" },
   { to: "/portfolio", label: "Portfólio", full: "Portfólio" },
 ] as const;
 

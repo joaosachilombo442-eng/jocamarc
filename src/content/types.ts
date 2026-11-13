@@ -18,12 +18,35 @@ export type NewsArticle = {
   /** Only original AJOCAMARC photographs; null renders a typographic placeholder. */
   coverImage: string | null;
   coverAlt: string | null;
-  publishedAt: string; // ISO date
+  /** ISO date; null while the association has not confirmed it. */
+  publishedAt: string | null;
   author?: string;
   location?: string;
   featured?: boolean;
   /** Demonstration content: shown with an "Exemplo" badge until replaced by official publications. */
   isDemo?: boolean;
+  /** Topic confirmed by the association, official text still to be supplied. */
+  pending?: boolean;
+};
+
+export type EventFlyer = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+};
+
+export type EventItem = {
+  id: string;
+  slug: string;
+  title: string;
+  /** ISO date as printed on the flyer; null when not supplied. */
+  date: string | null;
+  location: string | null;
+  description: string | null;
+  /** Points printed on the flyer (e.g. objectives), reproduced as-is. */
+  highlights: string[];
+  flyer: EventFlyer | null;
 };
 
 export type ProjectStatus = "planeado" | "em-curso" | "concluido";
@@ -71,13 +94,29 @@ export type PortfolioAlbum = {
   isDemo?: boolean;
 };
 
+export type CooperativeLogo = { src: string; alt: string; width: number; height: number };
+
+/** One cooperative of the AJOCAMARC network. Any field not supplied by the association is null. */
 export type Cooperative = {
   id: string;
-  name: string | null;
-  foundedYear: number | null;
+  slug: string;
+  /** Short display name, as written on the logo or supplied by the association. */
+  name: string;
+  /** Full legal designation, when supplied or printed on the logo. */
+  fullName: string | null;
+  acronym: string | null;
+  /** Kind of cooperative as printed on the logo (e.g. "Saneamento básico"). */
+  kind: string | null;
   location: string | null;
+  foundedAt: string | null; // ISO date
+  president: string | null;
+  members: { total: number; men: number | null; women: number | null } | null;
+  ageRange: string | null;
+  materials: string[];
+  phones: { display: string; tel: string }[];
+  nif: string | null;
+  logo: CooperativeLogo | null;
   description: string | null;
-  logo?: string | null;
 };
 
 export type Partner = {

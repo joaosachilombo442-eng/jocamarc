@@ -16,6 +16,7 @@ import { Route as CooperativasParceirosRouteImport } from './routes/cooperativas
 import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as MissaoVisaoValoresRouteImport } from './routes/missao-visao-valores'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
+import { Route as SobreNosRouteImport } from './routes/sobre-nos'
 import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 
@@ -54,6 +55,11 @@ const PortfolioRoute = PortfolioRouteImport.update({
   path: '/portfolio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SobreNosRoute = SobreNosRouteImport.update({
+  id: '/sobre-nos',
+  path: '/sobre-nos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
   id: '/noticias/',
   path: '/noticias/',
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/historia': typeof HistoriaRoute
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
   '/portfolio': typeof PortfolioRoute
+  '/sobre-nos': typeof SobreNosRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/': typeof NoticiasIndexRoute
 }
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/historia': typeof HistoriaRoute
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
   '/portfolio': typeof PortfolioRoute
+  '/sobre-nos': typeof SobreNosRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias': typeof NoticiasIndexRoute
 }
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/historia': typeof HistoriaRoute
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
   '/portfolio': typeof PortfolioRoute
+  '/sobre-nos': typeof SobreNosRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/': typeof NoticiasIndexRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/historia'
     | '/missao-visao-valores'
     | '/portfolio'
+    | '/sobre-nos'
     | '/noticias/$slug'
     | '/noticias/'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/historia'
     | '/missao-visao-valores'
     | '/portfolio'
+    | '/sobre-nos'
     | '/noticias/$slug'
     | '/noticias'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/historia'
     | '/missao-visao-valores'
     | '/portfolio'
+    | '/sobre-nos'
     | '/noticias/$slug'
     | '/noticias/'
   fileRoutesById: FileRoutesById
@@ -143,6 +155,7 @@ export interface RootRouteChildren {
   HistoriaRoute: typeof HistoriaRoute
   MissaoVisaoValoresRoute: typeof MissaoVisaoValoresRoute
   PortfolioRoute: typeof PortfolioRoute
+  SobreNosRoute: typeof SobreNosRoute
   NoticiasSlugRoute: typeof NoticiasSlugRoute
   NoticiasIndexRoute: typeof NoticiasIndexRoute
 }
@@ -198,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sobre-nos': {
+      id: '/sobre-nos'
+      path: '/sobre-nos'
+      fullPath: '/sobre-nos'
+      preLoaderRoute: typeof SobreNosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/noticias/': {
       id: '/noticias/'
       path: '/noticias'
@@ -223,6 +243,7 @@ const rootRouteChildren: RootRouteChildren = {
   HistoriaRoute: HistoriaRoute,
   MissaoVisaoValoresRoute: MissaoVisaoValoresRoute,
   PortfolioRoute: PortfolioRoute,
+  SobreNosRoute: SobreNosRoute,
   NoticiasSlugRoute: NoticiasSlugRoute,
   NoticiasIndexRoute: NoticiasIndexRoute,
 }
