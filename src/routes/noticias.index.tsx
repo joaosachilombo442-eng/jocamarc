@@ -1,19 +1,22 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Archive, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import { Archive, CalendarDays, ChevronLeft, ChevronRight, Newspaper, Search, X } from "lucide-react";
 import { useEffect, useState, type FormEvent } from "react";
 
+import { EventsGallery } from "@/components/news/EventsGallery";
 import { FeaturedNews, NewsCard } from "@/components/news/NewsCard";
-import { DemoNotice, Reveal } from "@/components/site/primitives";
+import { PendingContent, Reveal, SectionHeading } from "@/components/site/primitives";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
+  eventsQuery,
   featuredNewsQuery,
   latestNewsQuery,
   newsArchiveQuery,
   newsCategoriesQuery,
   newsListQuery,
 } from "@/content/api";
+import { INITIAL_EVENT_SLOTS } from "@/content/events";
 import { formatMonth } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -45,16 +48,17 @@ export const Route = createFileRoute("/noticias/")({
       queryClient.ensureQueryData(latestNewsQuery(4)),
       queryClient.ensureQueryData(newsCategoriesQuery()),
       queryClient.ensureQueryData(newsArchiveQuery()),
+      queryClient.ensureQueryData(eventsQuery()),
     ]),
   head: () => ({
     meta: [
-      { title: "Notícias e Actualidade — AJOCAMARC" },
+      { title: "Notícias e Eventos — AJOCAMARC" },
       {
         name: "description",
-        content: "Notícias, comunicados e actualidade da AJOCAMARC e das cooperativas de jovens catadores de Angola.",
+        content: "Notícias da AJOCAMARC e cartazes dos eventos em que a associação participa, com data, local e descrição.",
       },
-      { property: "og:title", content: "Notícias e Actualidade — AJOCAMARC" },
-      { property: "og:description", content: "Notícias, comunicados e actualidade da AJOCAMARC." },
+      { property: "og:title", content: "Notícias e Eventos — AJOCAMARC" },
+      { property: "og:description", content: "Notícias e eventos da AJOCAMARC e das cooperativas de catadores." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -72,6 +76,7 @@ function NewsPage() {
   const { data: latest } = useSuspenseQuery(latestNewsQuery(4));
   const { data: categories } = useSuspenseQuery(newsCategoriesQuery());
   const { data: archive } = useSuspenseQuery(newsArchiveQuery());
+  const { data: events } = useSuspenseQuery(eventsQuery());
 
   const [query, setQuery] = useState(search["q"] ?? "");
   useEffect(() => setQuery(search["q"] ?? ""), [search.q]);
@@ -79,7 +84,7 @@ function NewsPage() {
   const filtering = Boolean(search["q"] || search["categoria"] || search["mes"]);
   const showLead = !filtering && (search["pagina"] ?? 1) === 1 && featured;
   const sideLatest = latest.filter((n) => n.id !== featured?.id).slice(0, 3);
-  const hasDemo = latest.some((n) => n.isDemo);
+  const hasPending = latest.some((n) => n.pending);
 
   const onSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -98,14 +103,22 @@ function NewsPage() {
               Início
             </Link>
             <span className="mx-2">/</span>
-            <span className="text-foreground">Notícias e Actualidade</span>
+            <span className="text-foreground">Notícias e Eventos</span>
           </nav>
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="eyebrow mb-3">Sala de imprensa</p>
               <h1 className="text-4xl font-extrabold leading-none md:text-7xl">
-                Notícias <span className="text-primary">&amp;</span> Actualidade
+                Notícias <span className="text-primary">&amp;</span> Eventos
               </h1>
+              <nav aria-label="Secções da página" className="mt-6 flex gap-2">
+                <a href="#noticias" className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-deep">
+                  <Newspaper className="size-4" /> Notícias
+                </a>
+                <a href="#eventos" className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors hover:border-foreground/50">
+                  <CalendarDays className="size-4" /> Eventos
+                </a>
+              </nav>
             </div>
             <form onSubmit={onSearch} role="search" className="relative w-full md:w-96">
               <label htmlFor="news-search" className="sr-only">
@@ -134,14 +147,12 @@ function NewsPage() {
         </div>
       </section>
 
-      <div className="container-site py-10 md:py-14">
-        {hasDemo && (
-          <div className="mb-10">
-            <DemoNotice>
-              As notícias apresentadas são exemplos que ilustram o formato editorial. Serão substituídas
-              pelas publicações oficiais da AJOCAMARC, geridas através do futuro painel administrativo.
-            </DemoNotice>
-          </div>
+      <div id="noticias" className="container-site scroll-mt-28 py-10 md:py-14">
+        {hasPending && (
+          <PendingContent
+            className="mb-10"
+            hint="As notícias marcadas “Texto a publicar” já têm o tema confirmado. O texto completo, a data e a fotografia serão publicados assim que forem enviados pela AJOCAMARC."
+          />
         )}
 
         {showLead && featured && (
@@ -230,6 +241,17 @@ function NewsPage() {
           </aside>
         </div>
       </div>
+
+      <section id="eventos" aria-labelledby="titulo-eventos" className="scroll-mt-28 border-t bg-secondary py-16 md:py-20">
+        <div className="container-site">
+          <SectionHeading
+            eyebrow="Eventos"
+            title={<span id="titulo-eventos">Cartazes e eventos</span>}
+            description="Os eventos da AJOCAMARC e aqueles em que a associação participa, com o cartaz original, data, local e descrição. Toque num cartaz para o ver ampliado."
+          />
+          <EventsGallery events={events} slots={INITIAL_EVENT_SLOTS} />
+        </div>
+      </section>
     </>
   );
 }
