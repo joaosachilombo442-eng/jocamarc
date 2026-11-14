@@ -21,7 +21,7 @@ export function SiteFooter() {
           <p className="max-w-sm text-sm leading-relaxed text-ink-muted">
             A {site.shortName} reúne jovens catadores de materiais recicláveis em Angola. Nascida de
             uma iniciativa em {site.origin.place}, em {site.origin.year}, foi constituída em{" "}
-            {site.foundedYear}.
+            {site.foundedYear}, e conta hoje com {site.cooperativesAssociated} cooperativas associadas.
           </p>
           <CommunityButtons tone="dark" size="default" stacked className="max-w-sm" />
         </div>
@@ -90,9 +90,12 @@ export function SiteFooter() {
 
       <div className="border-t border-ink-foreground/10">
         <div className="container-site flex flex-col gap-2 py-6 text-xs text-ink-muted md:flex-row md:items-center md:justify-between">
-          <p>
+          <p className="leading-relaxed">
             <span className="font-semibold text-ink-foreground">{site.shortName}</span> — {site.legal.legalForm}
             {" · "}NIF {site.legal.nif}
+            {" · "}Registo fiscal {site.legal.fiscalRegistrationDate}
+            {" · "}Domicílio fiscal: {site.legal.fiscalAddress}
+            {" · "}Repartição fiscal {site.legal.taxOffice}
           </p>
           <p>
             © {year} {site.shortName}. Todos os direitos reservados.

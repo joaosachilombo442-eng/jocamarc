@@ -10,15 +10,17 @@ import { PartnerSlots } from "@/components/site/PartnerSlots";
 import { DemoBadge, Reveal, SectionHeading } from "@/components/site/primitives";
 import { Button } from "@/components/ui/button";
 import { site } from "@/config/site";
+import { CooperativeLogo } from "@/components/site/CooperativeCard";
 import {
   albumsQuery,
+  cooperativesQuery,
   latestNewsQuery,
   newsCategoriesQuery,
   partnersQuery,
   projectsQuery,
 } from "@/content/api";
 import { photos } from "@/content/media";
-import { iconForArea } from "@/content/institutional";
+import { iconForArea, missionVisionValues } from "@/content/institutional";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,7 +29,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Associação dos Jovens Catadores de Materiais Recicláveis de Angola. Nascida em Cacuaco em 2020 e constituída em 2021, com cinco cooperativas.",
+          "Associação dos Jovens Catadores de Materiais Recicláveis de Angola. Nascida em Cacuaco em 2020, constituída em 2021 e hoje com 150 cooperativas associadas.",
       },
       { property: "og:title", content: "AJOCAMARC — Juntos pela Economia Circular" },
       {
@@ -45,6 +47,7 @@ export const Route = createFileRoute("/")({
       queryClient.ensureQueryData(projectsQuery()),
       queryClient.ensureQueryData(albumsQuery()),
       queryClient.ensureQueryData(partnersQuery()),
+      queryClient.ensureQueryData(cooperativesQuery()),
     ]),
   component: HomePage,
 });
@@ -56,6 +59,7 @@ function HomePage() {
       <About />
       <Indicators />
       <Areas />
+      <CooperativesPreview />
       <ProjectsPreview />
       <NewsPreview />
       <PortfolioPreview />
@@ -91,7 +95,7 @@ function Hero() {
         </p>
         <div className="mt-10 flex animate-fade-up flex-col gap-3 [animation-delay:240ms] sm:flex-row">
           <Button asChild variant="cta" size="lg">
-            <Link to="/historia">
+            <Link to="/sobre-nos">
               Conheça a AJOCAMARC
               <ArrowRight />
             </Link>
@@ -134,17 +138,19 @@ function About() {
           <p>
             A {site.shortName} nasceu de uma iniciativa iniciada em {site.origin.place}, em{" "}
             {site.origin.year}, e foi constituída como associação em {site.foundedYear}, ano em que
-            foram também constituídas as suas cinco cooperativas.
-          </p>
-          <p>
-            O nosso trabalho une responsabilidade ambiental, inclusão social e juventude, com o
-            objectivo de afirmar os catadores de materiais recicláveis como parte essencial da
-            economia circular angolana.
+            foram também constituídas as suas cinco primeiras cooperativas. Hoje conta com{" "}
+            {site.cooperativesAssociated} cooperativas associadas.
           </p>
         </div>
+        <figure className="mt-6 border-l-4 border-accent pl-5">
+          <figcaption className="eyebrow mb-2">A nossa missão</figcaption>
+          <blockquote className="font-display text-lg leading-relaxed text-foreground">
+            {missionVisionValues.mission}
+          </blockquote>
+        </figure>
         <div className="mt-8 flex flex-wrap gap-3">
           <Button asChild variant="brand" size="lg">
-            <Link to="/historia">A nossa história</Link>
+            <Link to="/sobre-nos">Sobre nós</Link>
           </Button>
           <Button asChild variant="outline-brand" size="lg">
             <Link to="/missao-visao-valores">Missão, visão e valores</Link>
@@ -159,16 +165,17 @@ function Indicators() {
   const items = [
     { value: String(site.origin.year), label: "Início da iniciativa", detail: `Em ${site.origin.place}` },
     { value: String(site.foundedYear), label: "Constituição da associação", detail: site.shortName },
-    { value: String(site.cooperativesFounded), label: "Cooperativas constituídas", detail: `Em ${site.foundedYear}` },
+    { value: String(site.cooperativesFounded), label: "Primeiras cooperativas", detail: `Constituídas em ${site.foundedYear}` },
+    { value: String(site.cooperativesAssociated), label: "Cooperativas associadas", detail: "Rede actual" },
   ];
-  const tones = ["text-primary", "text-accent", "text-brand-blue"];
+  const tones = ["text-primary", "text-accent", "text-brand-blue", "text-brand-red"];
   return (
     <section aria-labelledby="indicadores" className="border-y bg-secondary">
       <div className="container-site py-14">
         <h2 id="indicadores" className="sr-only">
           Indicadores institucionais
         </h2>
-        <ul className="grid gap-10 sm:grid-cols-3">
+        <ul className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((it, i) => (
             <Reveal as="li" key={it.label} delay={i * 80} className="border-l-4 border-border pl-6">
               <p className={`font-display text-5xl font-extrabold md:text-6xl ${tones[i]}`}>{it.value}</p>
@@ -191,6 +198,42 @@ function Areas() {
         description="Da recolha nas ruas à organização em cooperativas, o trabalho dos jovens catadores contribui para cidades mais limpas e para uma economia mais circular."
       />
       <ActivityGrid />
+    </section>
+  );
+}
+
+function CooperativesPreview() {
+  const { data: coops } = useSuspenseQuery(cooperativesQuery());
+  return (
+    <section className="border-y bg-secondary py-20 md:py-24">
+      <div className="container-site">
+        <SectionHeading
+          eyebrow="Cooperativas integradas"
+          title={`Uma rede de ${site.cooperativesAssociated} cooperativas associadas`}
+          description="Conheça as cooperativas de catadores que integram a AJOCAMARC, apresentadas progressivamente."
+          action={
+            <Button asChild variant="outline-brand">
+              <Link to="/cooperativas" search={{ q: undefined, local: undefined }}>
+                Ver cooperativas <ArrowRight />
+              </Link>
+            </Button>
+          }
+        />
+        <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {coops.slice(0, 8).map((c, i) => (
+            <Reveal as="li" key={c.id} delay={(i % 4) * 50}>
+              <Link
+                to="/cooperativas/$slug"
+                params={{ slug: c.slug }}
+                className="group block rounded-2xl bg-card p-3 shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift"
+              >
+                <CooperativeLogo coop={c} className="aspect-[4/3] w-full border-none" />
+                <p className="mt-3 truncate px-1 text-center text-sm font-semibold group-hover:text-primary">{c.name}</p>
+              </Link>
+            </Reveal>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }
@@ -261,7 +304,7 @@ function NewsPreview() {
   return (
     <section className="container-site py-20 md:py-28">
       <SectionHeading
-        eyebrow="Notícias e actualidade"
+        eyebrow="Notícias e eventos"
         title="Últimas da AJOCAMARC"
         action={
           <Button asChild variant="outline-brand">
@@ -347,8 +390,8 @@ function Partners() {
         }
         action={
           <Button asChild variant="outline-brand">
-            <Link to="/cooperativas-parceiros">
-              Cooperativas e parceiros <ArrowRight />
+            <Link to="/sobre-nos" hash="parceiros">
+              Saber mais <ArrowRight />
             </Link>
           </Button>
         }

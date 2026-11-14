@@ -4,10 +4,10 @@ import { ArrowLeft, Calendar, MapPin } from "lucide-react";
 
 import { CategoryTag, NewsCard } from "@/components/news/NewsCard";
 import { ShareButtons } from "@/components/news/ShareButtons";
-import { DemoBadge, DemoNotice } from "@/components/site/primitives";
+import { DemoBadge, DemoNotice, PendingBadge, PendingContent } from "@/components/site/primitives";
 import { Button } from "@/components/ui/button";
 import { getRelatedNews, newsBySlugQuery, newsCategoriesQuery } from "@/content/api";
-import { formatDate } from "@/lib/format";
+import { formatOptionalDate } from "@/lib/format";
 
 export const Route = createFileRoute("/noticias/$slug")({
   loader: async ({ context: { queryClient }, params }) => {
@@ -55,11 +55,12 @@ function ArticlePage() {
           to="/noticias"
           className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary"
         >
-          <ArrowLeft className="size-4" /> Notícias e Actualidade
+          <ArrowLeft className="size-4" /> Notícias e Eventos
         </Link>
         <div className="mb-5 flex flex-wrap items-center gap-2">
           <CategoryTag slug={article.categorySlug} categories={categories} />
           {article.isDemo && <DemoBadge />}
+          {article.pending && <PendingBadge />}
         </div>
         <h1 className="text-4xl font-extrabold leading-[1.08] md:text-6xl">{article.title}</h1>
         <p className="mt-6 text-xl leading-relaxed text-muted-foreground">{article.excerpt}</p>
@@ -67,7 +68,7 @@ function ArticlePage() {
           <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
               <Calendar className="size-4" />
-              <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+              <time dateTime={article.publishedAt ?? undefined}>{formatOptionalDate(article.publishedAt)}</time>
             </span>
             {article.location && (
               <span className="inline-flex items-center gap-1.5">
@@ -100,13 +101,20 @@ function ArticlePage() {
             <DemoNotice>Este é um artigo de demonstração.</DemoNotice>
           </div>
         )}
-        <div className="prose-site">
-          {article.body.map((p, i) => (
-            <p key={i} className={i === 0 ? "text-xl leading-relaxed" : ""}>
-              {p}
-            </p>
-          ))}
-        </div>
+        {article.body.length > 0 ? (
+          <div className="prose-site">
+            {article.body.map((p, i) => (
+              <p key={i} className={i === 0 ? "text-xl leading-relaxed" : ""}>
+                {p}
+              </p>
+            ))}
+          </div>
+        ) : (
+          <PendingContent
+            title="Texto integral a publicar"
+            hint="O texto completo, a data e a fotografia desta notícia serão publicados assim que forem enviados pela AJOCAMARC."
+          />
+        )}
         <div className="mt-12 border-t pt-6">
           <ShareButtons title={article.title} />
         </div>

@@ -214,3 +214,18 @@ export function DemoNotice({ children }: { children: ReactNode }) {
     </div>
   );
 }
+
+/** Marks a publication whose topic is confirmed but whose official text is still to be supplied. */
+export function PendingBadge({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center rounded-full border border-primary/40 bg-primary-soft px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-primary-deep",
+        className,
+      )}
+      title="Texto oficial a publicar"
+    >
+      Texto a publicar
+    </span>
+  );
+}
