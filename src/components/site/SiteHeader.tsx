@@ -51,7 +51,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Button asChild variant="cta" size="lg" className="hidden sm:inline-flex">
             <Link to="/contactos">
-              Contacte-nos
+              Contactos
               <ArrowRight />
             </Link>
           </Button>
