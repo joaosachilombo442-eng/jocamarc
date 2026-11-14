@@ -1,9 +1,20 @@
 import { describe, expect, it } from "vitest";
 
 import { site } from "@/config/site";
-import { listAlbums, listCooperatives, listNews, listPartners, listProjects, NEWS_PAGE_SIZE } from "@/content/api";
-import { photos } from "@/content/media";
-import { actionAreas, timeline } from "@/content/institutional";
+import {
+  getCooperativeBySlug,
+  listAlbums,
+  listCooperativeLocations,
+  listCooperatives,
+  listEvents,
+  listNews,
+  listPartners,
+  listProjects,
+  NEWS_PAGE_SIZE,
+  PENDING_LOCATION,
+} from "@/content/api";
+import { cooperativeLogos, flyers, photos } from "@/content/media";
+import { actionAreas, missionVisionValues, timeline } from "@/content/institutional";
 
 describe("Confirmed institutional facts", () => {
   it("the initiative started in Cacuaco in 2020", () => {
@@ -16,19 +27,17 @@ describe("Confirmed institutional facts", () => {
     expect(constitution?.year).toBe("2021");
   });
 
-  it("five cooperatives were constituted in 2021", async () => {
-    const coops = await listCooperatives();
-    expect(coops).toHaveLength(5);
-    expect(coops.every((c) => c.foundedYear === 2021)).toBe(true);
+  it("five cooperatives were constituted in 2021", () => {
+    expect(site.cooperativesFounded).toBe(5);
+    expect(timeline.find((e) => e.title === "Constituição das cinco cooperativas")?.year).toBe("2021");
+  });
+
+  it("the association has 150 associated cooperatives", () => {
+    expect(site.cooperativesAssociated).toBe(150);
   });
 });
 
 describe("No invented institutional data", () => {
-  it("cooperative names stay empty until confirmed", async () => {
-    const coops = await listCooperatives();
-    expect(coops.every((c) => c.name === null)).toBe(true);
-  });
-
   it("no partner is published until confirmed", async () => {
     expect(await listPartners()).toEqual([]);
   });
@@ -41,9 +50,14 @@ describe("No invented institutional data", () => {
     expect(site.social.youtube).toBeNull();
   });
 
-  it("every sample news item is flagged as demonstration", async () => {
-    const { items } = await listNews({ page: 1 });
-    expect(items.every((n) => n.isDemo)).toBe(true);
+  it("publishes only the two requested news items, without invented text or date", async () => {
+    const { items, total } = await listNews({ page: 1 });
+    expect(total).toBe(2);
+    expect(items.map((n) => n.slug).sort()).toEqual([
+      "entrada-da-ajocamarc-no-cnj",
+      "relatorio-anual-de-residuos-de-angola-2025",
+    ]);
+    expect(items.every((n) => n.pending && n.body.length === 0 && n.publishedAt === null)).toBe(true);
   });
 });
 
@@ -55,10 +69,10 @@ describe("News listing", () => {
   });
 
   it("filters by category and accent-insensitive search", async () => {
-    const coops = await listNews({ category: "cooperativas" });
-    expect(coops.items.every((n) => n.categorySlug === "cooperativas")).toBe(true);
-    const found = await listNews({ q: "sensibilizacao" });
-    expect(found.items.some((n) => n.title.includes("sensibilização"))).toBe(true);
+    const inst = await listNews({ category: "institucional" });
+    expect(inst.items.map((n) => n.slug)).toEqual(["entrada-da-ajocamarc-no-cnj"]);
+    const found = await listNews({ q: "residuos" });
+    expect(found.items.map((n) => n.slug)).toEqual(["relatorio-anual-de-residuos-de-angola-2025"]);
   });
 });
 
@@ -76,7 +90,7 @@ describe("Only original AJOCAMARC photographs", () => {
     expect([...supplied].every((src) => src.startsWith("/__l5e/assets-v1/"))).toBe(true);
   });
 
-  it("demo news and projects carry no photograph, so real photos never illustrate invented events", async () => {
+  it("news without a supplied photo and demo projects carry no photograph", async () => {
     const { items } = await listNews({ page: 1 });
     expect(items.every((n) => n.coverImage === null)).toBe(true);
     const projects = await listProjects();
@@ -126,5 +140,100 @@ describe("Activity cards use only original photographs", () => {
     for (const area of actionAreas) {
       if (area.photo) expect(supplied.has(area.photo.src)).toBe(true);
     }
+  });
+});
+
+describe("Official mission, vision and values", () => {
+  it("uses the supplied mission and vision wording", () => {
+    expect(missionVisionValues.mission).toBe(
+      "Promover a organização, representação, dignificação e inclusão socioeconómica dos catadores de materiais recicláveis em Angola, através do associativismo, formação profissional, fortalecimento das cooperativas, empreendedorismo verde e valorização dos resíduos.",
+    );
+    expect(missionVisionValues.vision).toBe(
+      "Ser uma organização nacional de referência e reconhecimento internacional, contribuindo para uma Angola mais limpa, inclusiva e sustentável.",
+    );
+  });
+
+  it("lists the twelve values and eight principles, with no invented descriptions", () => {
+    expect(missionVisionValues.values).toHaveLength(12);
+    expect(missionVisionValues.values).toContain("Igualdade de oportunidades");
+    expect(missionVisionValues.principles).toEqual([
+      "Justiça social",
+      "Democracia participativa",
+      "Legalidade",
+      "Igualdade",
+      "Protecção ambiental",
+      "Economia circular",
+      "Cooperação",
+      "Valorização dos catadores",
+    ]);
+  });
+
+  it("states the institutional commitment", () => {
+    expect(missionVisionValues.commitment).toBe(
+      "Transformar a actividade dos catadores numa actividade económica organizada, reconhecida, dignificada e sustentável.",
+    );
+  });
+});
+
+describe("Cooperativas integradas", () => {
+  it("registers 8 cooperatives initially, each with its supplied logo", async () => {
+    const coops = await listCooperatives();
+    expect(coops).toHaveLength(8);
+    const logos = new Set(Object.values(cooperativeLogos).map((l) => l.src));
+    expect(coops.every((c) => c.logo !== null && logos.has(c.logo.src))).toBe(true);
+    expect([...logos].every((src) => src.startsWith("/__l5e/assets-v1/"))).toBe(true);
+  });
+
+  it("Mbongo Paxi carries exactly the supplied details", async () => {
+    const c = await getCooperativeBySlug("mbongo-paxi");
+    expect(c?.location).toBe("Cacuaco, Luanda");
+    expect(c?.president).toBe("David Paxi João");
+    expect(c?.members).toEqual({ total: 15, men: 11, women: 4 });
+    expect(c?.materials).toEqual(["Plástico", "Papel", "Papelão", "Latas", "Outros"]);
+    expect(c?.phones.map((p) => p.display)).toEqual(["938 236 248", "925 079 931"]);
+    expect(c?.nif).toBe("5002430053");
+  });
+
+  it("Dilangangu Kuanzambi carries exactly the supplied details", async () => {
+    const c = await getCooperativeBySlug("dilangangu-kuanzambi");
+    expect(c?.fullName).toBe("Cooperativa de Saneamento Básico Dilangangu Kuanzambi, R.L.");
+    expect(c?.foundedAt).toBe("2022-02-02");
+    expect(c?.president).toBe("Alexandre Domingos Daniel");
+    expect(c?.members).toEqual({ total: 25, men: 15, women: 10 });
+    expect(c?.ageRange).toBe("18 a 50 anos");
+    expect(c?.materials).toEqual(["Plástico", "Papel", "Papelão", "Garrafas", "Alumínio"]);
+  });
+
+  it("the other six cooperatives have no invented president, members, location or contacts", async () => {
+    const coops = await listCooperatives();
+    const others = coops.filter((c) => !["mbongo-paxi", "dilangangu-kuanzambi"].includes(c.slug));
+    expect(others).toHaveLength(6);
+    for (const c of others) {
+      expect(c.president).toBeNull();
+      expect(c.members).toBeNull();
+      expect(c.location).toBeNull();
+      expect(c.foundedAt).toBeNull();
+      expect(c.phones).toEqual([]);
+      expect(c.materials).toEqual([]);
+    }
+  });
+
+  it("searches by name ignoring accents and filters by location", async () => {
+    expect((await listCooperatives({ q: "raizes" })).map((c) => c.slug)).toEqual(["raizes-4as"]);
+    expect((await listCooperatives({ q: "CSBN" })).map((c) => c.slug)).toEqual(["nakulima"]);
+    expect((await listCooperatives({ location: "Cacuaco, Luanda" })).map((c) => c.slug)).toEqual(["mbongo-paxi"]);
+    expect(await listCooperatives({ location: PENDING_LOCATION })).toHaveLength(7);
+    expect(await listCooperativeLocations()).toEqual(["Cacuaco, Luanda"]);
+  });
+});
+
+describe("Eventos", () => {
+  it("shows the Dande conference exactly as printed on its flyer", async () => {
+    const [ev] = await listEvents();
+    expect(ev?.title).toBe("I Conferência Municipal do Dande — Gestão de Resíduos e Desenvolvimento Local");
+    expect(ev?.date).toBe("2026-10-30");
+    expect(ev?.location).toBe("Dande");
+    expect(ev?.flyer?.src).toBe(flyers.conferenciaDande.src);
+    expect(ev?.flyer?.src.startsWith("/__l5e/assets-v1/")).toBe(true);
   });
 });
