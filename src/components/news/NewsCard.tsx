@@ -2,9 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { Calendar } from "lucide-react";
 
 import { MediaPlaceholder, type PlaceholderTone } from "@/components/site/MediaPlaceholder";
-import { DemoBadge } from "@/components/site/primitives";
+import { DemoBadge, PendingBadge } from "@/components/site/primitives";
 import type { NewsArticle, NewsCategory } from "@/content/types";
-import { formatDate } from "@/lib/format";
+import { formatOptionalDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 const CATEGORY_TONE: Record<string, string> = {
@@ -85,6 +85,7 @@ export function NewsCard({
           <div className="mb-1.5 flex flex-wrap items-center gap-2">
             <CategoryTag slug={article.categorySlug} categories={categories} />
             {article.isDemo && <DemoBadge />}
+            {article.pending && <PendingBadge />}
           </div>
           <h3 className="line-clamp-2 font-display text-base font-semibold leading-snug">
             <Link
@@ -95,7 +96,7 @@ export function NewsCard({
               {article.title}
             </Link>
           </h3>
-          <p className="mt-1 text-xs text-muted-foreground">{formatDate(article.publishedAt)}</p>
+          <p className="mt-1 text-xs text-muted-foreground">{formatOptionalDate(article.publishedAt)}</p>
         </div>
       </article>
     );
@@ -128,12 +129,13 @@ export function NewsCard({
         <span className="absolute left-4 top-4 flex gap-2">
           <CategoryTag slug={article.categorySlug} categories={categories} />
           {article.isDemo && <DemoBadge />}
+            {article.pending && <PendingBadge />}
         </span>
       </Link>
       <div className="flex flex-1 flex-col p-6">
         <p className="mb-3 flex items-center gap-2 text-xs font-medium text-muted-foreground">
           <Calendar className="size-3.5" />
-          <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+          <time dateTime={article.publishedAt ?? undefined}>{formatOptionalDate(article.publishedAt)}</time>
         </p>
         <h3 className="font-display text-xl font-semibold leading-snug">
           <Link
@@ -185,6 +187,7 @@ export function FeaturedNews({
           </span>
           <CategoryTag slug={article.categorySlug} categories={categories} />
           {article.isDemo && <DemoBadge />}
+            {article.pending && <PendingBadge />}
         </div>
         <h2 className="max-w-3xl text-3xl font-bold leading-tight md:text-5xl">
           <Link
@@ -200,7 +203,7 @@ export function FeaturedNews({
         </p>
         <p className="mt-5 flex items-center gap-2 text-sm text-ink-muted">
           <Calendar className="size-4" />
-          <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+          <time dateTime={article.publishedAt ?? undefined}>{formatOptionalDate(article.publishedAt)}</time>
           {article.location && <span>· {article.location}</span>}
         </p>
       </div>

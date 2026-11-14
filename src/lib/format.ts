@@ -27,3 +27,8 @@ export function formatMonth(ym: string): string {
   if (!y || !m) return ym;
   return `${MONTHS[m - 1]} de ${y}`;
 }
+
+/** Date of a publication, or the pending label while the association has not confirmed it. */
+export function formatOptionalDate(iso: string | null | undefined): string {
+  return iso ? formatDate(iso) : "Data a confirmar";
+}
