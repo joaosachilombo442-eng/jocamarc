@@ -220,6 +220,9 @@ function NewsPage() {
               <h2 className="mb-4 flex items-center gap-2 border-b-2 border-foreground pb-3 font-display text-sm font-bold uppercase tracking-[0.14em]">
                 <Archive className="size-4" /> Arquivo
               </h2>
+              {archive.length === 0 && (
+                <p className="text-sm text-muted-foreground">O arquivo mensal aparece quando as notícias tiverem data publicada.</p>
+              )}
               <ul className="space-y-1">
                 {archive.map((m) => (
                   <li key={m.month}>
