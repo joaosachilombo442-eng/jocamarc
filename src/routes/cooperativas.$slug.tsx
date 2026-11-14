@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft, Phone } from "lucide-react";
+import type { ReactNode } from "react";
 
 import { CooperativeLogo } from "@/components/site/CooperativeCard";
 import { CtaBand } from "@/components/site/CtaBand";
@@ -46,7 +47,7 @@ export const Route = createFileRoute("/cooperativas/$slug")({
   component: CooperativePage,
 });
 
-function Field({ label, value }: { label: string; value: React.ReactNode | null }) {
+function Field({ label, value }: { label: string; value: ReactNode | null }) {
   return (
     <div className="grid gap-1 border-b py-4 sm:grid-cols-[12rem_1fr] sm:gap-6">
       <dt className="text-sm font-medium text-muted-foreground">{label}</dt>

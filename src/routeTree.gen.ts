@@ -17,6 +17,8 @@ import { Route as HistoriaRouteImport } from './routes/historia'
 import { Route as MissaoVisaoValoresRouteImport } from './routes/missao-visao-valores'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as SobreNosRouteImport } from './routes/sobre-nos'
+import { Route as CooperativasIndexRouteImport } from './routes/cooperativas.index'
+import { Route as CooperativasSlugRouteImport } from './routes/cooperativas.$slug'
 import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 
@@ -60,6 +62,16 @@ const SobreNosRoute = SobreNosRouteImport.update({
   path: '/sobre-nos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CooperativasIndexRoute = CooperativasIndexRouteImport.update({
+  id: '/cooperativas/',
+  path: '/cooperativas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CooperativasSlugRoute = CooperativasSlugRouteImport.update({
+  id: '/cooperativas/$slug',
+  path: '/cooperativas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
   id: '/noticias/',
   path: '/noticias/',
@@ -80,7 +92,9 @@ export interface FileRoutesByFullPath {
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
   '/portfolio': typeof PortfolioRoute
   '/sobre-nos': typeof SobreNosRoute
+  '/cooperativas/$slug': typeof CooperativasSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
+  '/cooperativas/': typeof CooperativasIndexRoute
   '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRoutesByTo {
@@ -92,7 +106,9 @@ export interface FileRoutesByTo {
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
   '/portfolio': typeof PortfolioRoute
   '/sobre-nos': typeof SobreNosRoute
+  '/cooperativas/$slug': typeof CooperativasSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
+  '/cooperativas': typeof CooperativasIndexRoute
   '/noticias': typeof NoticiasIndexRoute
 }
 export interface FileRoutesById {
@@ -105,7 +121,9 @@ export interface FileRoutesById {
   '/missao-visao-valores': typeof MissaoVisaoValoresRoute
   '/portfolio': typeof PortfolioRoute
   '/sobre-nos': typeof SobreNosRoute
+  '/cooperativas/$slug': typeof CooperativasSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
+  '/cooperativas/': typeof CooperativasIndexRoute
   '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRouteTypes {
@@ -119,7 +137,9 @@ export interface FileRouteTypes {
     | '/missao-visao-valores'
     | '/portfolio'
     | '/sobre-nos'
+    | '/cooperativas/$slug'
     | '/noticias/$slug'
+    | '/cooperativas/'
     | '/noticias/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -131,7 +151,9 @@ export interface FileRouteTypes {
     | '/missao-visao-valores'
     | '/portfolio'
     | '/sobre-nos'
+    | '/cooperativas/$slug'
     | '/noticias/$slug'
+    | '/cooperativas'
     | '/noticias'
   id:
     | '__root__'
@@ -143,7 +165,9 @@ export interface FileRouteTypes {
     | '/missao-visao-valores'
     | '/portfolio'
     | '/sobre-nos'
+    | '/cooperativas/$slug'
     | '/noticias/$slug'
+    | '/cooperativas/'
     | '/noticias/'
   fileRoutesById: FileRoutesById
 }
@@ -156,7 +180,9 @@ export interface RootRouteChildren {
   MissaoVisaoValoresRoute: typeof MissaoVisaoValoresRoute
   PortfolioRoute: typeof PortfolioRoute
   SobreNosRoute: typeof SobreNosRoute
+  CooperativasSlugRoute: typeof CooperativasSlugRoute
   NoticiasSlugRoute: typeof NoticiasSlugRoute
+  CooperativasIndexRoute: typeof CooperativasIndexRoute
   NoticiasIndexRoute: typeof NoticiasIndexRoute
 }
 
@@ -218,6 +244,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreNosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cooperativas/': {
+      id: '/cooperativas/'
+      path: '/cooperativas'
+      fullPath: '/cooperativas/'
+      preLoaderRoute: typeof CooperativasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cooperativas/$slug': {
+      id: '/cooperativas/$slug'
+      path: '/cooperativas/$slug'
+      fullPath: '/cooperativas/$slug'
+      preLoaderRoute: typeof CooperativasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/noticias/': {
       id: '/noticias/'
       path: '/noticias'
@@ -244,7 +284,9 @@ const rootRouteChildren: RootRouteChildren = {
   MissaoVisaoValoresRoute: MissaoVisaoValoresRoute,
   PortfolioRoute: PortfolioRoute,
   SobreNosRoute: SobreNosRoute,
+  CooperativasSlugRoute: CooperativasSlugRoute,
   NoticiasSlugRoute: NoticiasSlugRoute,
+  CooperativasIndexRoute: CooperativasIndexRoute,
   NoticiasIndexRoute: NoticiasIndexRoute,
 }
 export const routeTree = rootRouteImport
