@@ -10,7 +10,7 @@ const TOP = ["border-t-primary", "border-t-accent", "border-t-brand-blue", "bord
 /** Logo shown on a white tile so the cooperative's original artwork is never recoloured. */
 export function CooperativeLogo({ coop, className }: { coop: Cooperative; className?: string }) {
   return (
-    <div className={cn("grid place-items-center overflow-hidden rounded-xl border bg-background p-3", className)}>
+    <div className={cn("relative grid place-items-center overflow-hidden rounded-xl border bg-background p-3", className)}>
       {coop.logo ? (
         <img
           src={coop.logo.src}
@@ -18,7 +18,7 @@ export function CooperativeLogo({ coop, className }: { coop: Cooperative; classN
           width={coop.logo.width}
           height={coop.logo.height}
           loading="lazy"
-          className="h-full w-full object-contain"
+          className="absolute inset-0 h-full w-full object-contain p-[inherit]"
         />
       ) : (
         <span className="flex flex-col items-center gap-1 text-muted-foreground">
