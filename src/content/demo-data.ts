@@ -10,6 +10,7 @@
  * must never illustrate an invented event, so these render a typographic placeholder.
  */
 import type { Partner, Project } from "./types";
+import { partnerLogos } from "./media";
 
 export const projects: Project[] = [
   {
@@ -71,5 +72,14 @@ export const projects: Project[] = [
 ];
 
 
-/** No partner is published until confirmed by the association. */
-export const partners: Partner[] = [];
+/** Institutional partners confirmed by the association and represented by supplied logos. */
+export const partners: Partner[] = [
+  { id: "minamb", name: "Ministério do Ambiente (MINAMB)", type: "Instituição pública", logo: partnerLogos.minamb.url },
+  { id: "cnj", name: "Conselho Nacional de Juventude (CNJ)", type: "Instituição", logo: partnerLogos.cnj.url },
+  { id: "minjude", name: "Ministério da Juventude e Desportos", type: "Instituição pública", logo: partnerLogos.minjude.url },
+  { id: "assembleia-nacional", name: "Assembleia Nacional", type: "Instituição pública", logo: partnerLogos.assembleia.url },
+  { id: "inefop", name: "Instituto Nacional de Emprego e Formação Profissional (INEFOP)", type: "Instituição pública", logo: partnerLogos.inefop.url },
+  { id: "anr", name: "Agência Nacional de Resíduos (ANR)", type: "Instituição pública", logo: partnerLogos.anr.url },
+  { id: "iaj", name: "Instituto Angolano da Juventude (IAJ)", type: "Instituição pública", logo: partnerLogos.iaj.url },
+  { id: "inapem", name: "Instituto Nacional de Apoio às Micro, Pequenas e Médias Empresas (INAPEM)", type: "Instituição pública", logo: partnerLogos.inapem.url },
+];
