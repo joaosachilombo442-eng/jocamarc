@@ -1,4 +1,4 @@
-import { Calendar, Expand, ImageIcon, MapPin, X } from "lucide-react";
+import { Calendar, CheckCircle2, Expand, ImageIcon, MapPin, X } from "lucide-react";
 import { useState } from "react";
 
 import { Reveal } from "@/components/site/primitives";
@@ -14,7 +14,11 @@ export function EventsGallery({ events, slots }: { events: EventItem[]; slots: n
   return (
     <>
       <ul className="grid gap-6 md:grid-cols-2">
-        {events.map((ev, i) => (
+        {events.map((ev, i) => {
+          const today = new Date().toLocaleDateString("en-CA");
+          const eventStatus = !ev.date ? "Data a confirmar" : ev.date < today ? "Realizado" : ev.date === today ? "Hoje" : "Agendado";
+          const statusClass = eventStatus === "Agendado" ? "bg-primary-soft text-primary-deep" : eventStatus === "Hoje" ? "bg-accent/15 text-accent-foreground" : "bg-muted text-muted-foreground";
+          return (
           <Reveal as="li" key={ev.id} delay={(i % 2) * 80} className={i === 0 ? "md:col-span-2" : ""}>
             <article className="group flex h-full flex-col overflow-hidden rounded-2xl border bg-card shadow-soft transition-shadow hover:shadow-lift">
               {ev.flyer ? (
@@ -38,6 +42,10 @@ export function EventsGallery({ events, slots }: { events: EventItem[]; slots: n
                 </button>
               ) : null}
               <div className="flex flex-1 flex-col p-6 md:p-8">
+                <span className={`mb-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${statusClass}`}>
+                  {eventStatus === "Realizado" && <CheckCircle2 className="size-3.5" aria-hidden />}
+                  {eventStatus}
+                </span>
                 <p className="mb-3 flex flex-wrap gap-x-5 gap-y-1 text-sm font-medium text-muted-foreground">
                   <span className="inline-flex items-center gap-1.5">
                     <Calendar className="size-4 text-accent" />
@@ -62,7 +70,8 @@ export function EventsGallery({ events, slots }: { events: EventItem[]; slots: n
               </div>
             </article>
           </Reveal>
-        ))}
+          );
+        })}
         {Array.from({ length: empty }, (_, i) => (
           <li
             key={`slot-${i}`}
