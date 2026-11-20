@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, ImageIcon, MapPin, Users } from "lucide-react";
+import { ArrowRight, MapPin, Users } from "lucide-react";
 
 import type { Cooperative } from "@/content/types";
 import { cn } from "@/lib/utils";
@@ -8,9 +8,10 @@ const TOP = ["border-t-primary", "border-t-accent", "border-t-brand-blue", "bord
 
 /** Logo shown on a white tile so the cooperative's original artwork is never recoloured. */
 export function CooperativeLogo({ coop, className }: { coop: Cooperative; className?: string }) {
+  if (!coop.logo) return null;
   return (
     <div className={cn("relative grid place-items-center overflow-hidden rounded-xl border bg-background p-3", className)}>
-      {coop.logo ? (
+      {(
         <img
           src={coop.logo.src}
           alt={coop.logo.alt}
@@ -19,11 +20,6 @@ export function CooperativeLogo({ coop, className }: { coop: Cooperative; classN
           loading="lazy"
           className="absolute inset-0 h-full w-full object-contain p-[inherit]"
         />
-      ) : (
-        <span className="flex flex-col items-center gap-1 text-muted-foreground">
-          <ImageIcon className="size-5" aria-hidden />
-          <span className="text-[0.65rem] font-semibold uppercase tracking-wider">Logótipo</span>
-        </span>
       )}
     </div>
   );
@@ -37,7 +33,7 @@ export function CooperativeCard({ coop, index }: { coop: Cooperative; index: num
         TOP[index % TOP.length],
       )}
     >
-      <CooperativeLogo coop={coop} className="aspect-[4/3] w-full" />
+      {coop.logo && <CooperativeLogo coop={coop} className="aspect-[4/3] w-full" />}
       <div className="mt-5 flex flex-1 flex-col">
         {coop.kind && (
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">{coop.kind}</p>
