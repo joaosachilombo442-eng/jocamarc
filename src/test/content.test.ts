@@ -98,6 +98,11 @@ describe("Only original AJOCAMARC photographs", () => {
     expect(demos).toHaveLength(4);
     expect(demos.slice(0, 3).every((p) => p.images.length === 1)).toBe(true);
     expect(demos.slice(0, 3).flatMap((p) => p.images).every((image) => supplied.has(image.src))).toBe(true);
+    expect(demos.slice(0, 3).map((p) => p.images[0]?.src)).toEqual([
+      photos.triagemCartao.src,
+      photos.encontroArLivre.src,
+      photos.reciclagemPapel.src,
+    ]);
     expect(demos[3]?.images).toEqual([]);
   });
 });
