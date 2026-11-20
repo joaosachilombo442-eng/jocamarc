@@ -382,6 +382,10 @@ function PortfolioPreview() {
 
 function Partners() {
   const { data: partners } = useSuspenseQuery(partnersQuery());
+  // Do not render empty logo slots on the homepage: the section appears only
+  // when AJOCAMARC has confirmed partner records to display.
+  if (partners.length === 0) return null;
+
   return (
     <section className="container-site pt-20 md:pt-28">
       <SectionHeading
