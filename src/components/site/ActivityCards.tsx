@@ -51,12 +51,6 @@ export function ActivityCard({ area }: { area: ActionArea }) {
       >
         <area.Icon className="size-5" />
       </span>
-      {!area.photo && (
-        <span className="absolute right-5 top-6 rounded-full bg-background/15 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-ink-foreground backdrop-blur-sm">
-          Fotografias a publicar
-        </span>
-      )}
-
       <div className="p-6 text-ink-foreground">
         <span className={cn("mb-4 block h-1 w-10 rounded-full transition-all duration-500 group-hover:w-16", a.bar)} />
         <h3 className="text-2xl font-bold leading-tight">{area.title}</h3>
