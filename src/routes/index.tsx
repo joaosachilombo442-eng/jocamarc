@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
 
 import { FeaturedNews, NewsCard } from "@/components/news/NewsCard";
 import { CtaBand } from "@/components/site/CtaBand";
@@ -263,9 +263,9 @@ function ProjectsPreview() {
               <Link
                 to="/actividades"
                 hash={p.slug}
-                className="group block h-full overflow-hidden rounded-xl bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-lift"
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-card shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
-                <div className="aspect-[4/3] overflow-hidden">
+                <div className="aspect-[16/9] overflow-hidden bg-secondary">
                   {p.images[0] ? (
                     <img
                       src={p.images[0].src}
@@ -279,13 +279,17 @@ function ProjectsPreview() {
                     <MediaPlaceholder label={p.area} Icon={iconForArea(p.area)} tone={PROJECT_TONES[i % PROJECT_TONES.length] ?? "primary"} />
                   )}
                 </div>
-                <div className="p-6">
-                  <div className="mb-3 flex items-center gap-2">
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <div className="mb-3 flex flex-wrap items-center gap-2">
                     <span className="text-xs font-semibold uppercase tracking-wider text-primary">{p.area}</span>
                     {p.isDemo && <DemoBadge />}
                   </div>
-                  <h3 className="text-xl font-semibold group-hover:text-primary">{p.title}</h3>
-                  <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{p.description}</p>
+                  <h3 className="text-xl font-semibold leading-snug transition-colors group-hover:text-primary">{p.title}</h3>
+                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
+                  <span className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-primary">
+                    Ver iniciativa
+                    <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
+                  </span>
                 </div>
               </Link>
             </Reveal>
