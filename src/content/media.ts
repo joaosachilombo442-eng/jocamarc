@@ -34,6 +34,14 @@ import logoMbongoPaxi from "@/assets/cooperativas/mbongo-paxi-logotipo.webp.asse
 import logoNakulima from "@/assets/cooperativas/nakulima-csbn-logotipo.webp.asset.json";
 import logoRaizes from "@/assets/cooperativas/raizes-4as-logotipo.webp.asset.json";
 import flyerDande from "@/assets/eventos/conferencia-municipal-dande-cartaz.webp.asset.json";
+import logoMinjude from "@/assets/minjude.webp";
+import logoANR from "@/assets/anr.webp";
+import logoAssembleia from "@/assets/assembleia-nacional.webp";
+import logoCNJ from "@/assets/cnj.webp";
+import logoIAJ from "@/assets/iaj.webp";
+import logoINAPEM from "@/assets/inapem.webp";
+import logoINEFOP from "@/assets/inefop.webp";
+import logoMINAMB from "@/assets/minamb.webp";
 
 import type { CooperativeLogo, EventFlyer, PortfolioAlbum, PortfolioPhoto, PortfolioVideo } from "./types";
 
