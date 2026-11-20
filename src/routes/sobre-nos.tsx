@@ -80,6 +80,24 @@ function AboutPage() {
         </Reveal>
       </section>
 
+      <section id="presidencia" className="border-y bg-card py-16 md:py-20">
+        <div className="container-site">
+          <Reveal>
+            <p className="eyebrow mb-3">Liderança institucional</p>
+            <div className="grid gap-6 rounded-2xl border bg-background p-7 shadow-soft md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:p-10">
+              <div>
+                <h2 className="text-3xl font-bold leading-tight md:text-4xl">Presidência da AJOCAMARC</h2>
+                <p className="mt-4 font-display text-2xl font-bold text-primary md:text-3xl">Manuel Lourenço Salvador</p>
+                <p className="mt-2 text-base font-medium text-muted-foreground">Presidente da Associação dos Jovens Catadores de Materiais Recicláveis de Angola</p>
+              </div>
+              <span className="inline-flex w-fit items-center rounded-full bg-primary-soft px-4 py-2 text-sm font-semibold text-primary-deep">
+                Presidência
+              </span>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="border-t bg-secondary">
         <div className="container-site grid gap-12 py-20 md:py-24 lg:grid-cols-[1fr_1.4fr]">
           <Reveal className="lg:sticky lg:top-28 lg:self-start">
