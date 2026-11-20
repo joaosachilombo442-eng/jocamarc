@@ -152,7 +152,8 @@ export function NewsCard({
   );
 }
 
-/** Large editorial lead story. */
+/** Large editorial lead story. The photograph and editorial text remain in separate blocks
+ * so the headline never competes with the image, especially on narrow screens. */
 export function FeaturedNews({
   article,
   categories,
@@ -161,50 +162,60 @@ export function FeaturedNews({
   categories: NewsCategory[];
 }) {
   return (
-    <article className="group relative isolate overflow-hidden rounded-2xl bg-ink shadow-lift">
-      {article.coverImage ? (
-        <img
-          src={article.coverImage}
-          alt={article.coverAlt ?? ""}
-          width={1600}
-          height={900}
-          className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-[1.03]"
-        />
-      ) : (
-        <MediaPlaceholder
-          size="lg"
-          variant="solid"
-          showText={false}
-          tone={CATEGORY_PLACEHOLDER[article.categorySlug] ?? "primary"}
-          className="absolute inset-0 -z-10"
-        />
-      )}
-      <div className="card-scrim absolute inset-0 -z-10" aria-hidden />
-      <div className="flex min-h-[24rem] flex-col justify-end gap-0 p-5 text-ink-foreground sm:min-h-[28rem] sm:p-8 md:min-h-[32rem] md:p-10">
-        <div className="mb-4 flex flex-wrap items-center gap-2">
-          <span className="rounded bg-ink-foreground px-2 py-0.5 text-[0.7rem] font-bold uppercase tracking-wider text-ink">
+    <article className="group overflow-hidden rounded-2xl border bg-card shadow-lift transition-shadow hover:shadow-lift">
+      <Link
+        to="/noticias/$slug"
+        params={{ slug: article.slug }}
+        className="relative block aspect-[16/9] overflow-hidden bg-muted"
+        aria-label={`Abrir notícia: ${article.title}`}
+      >
+        {article.coverImage ? (
+          <img
+            src={article.coverImage}
+            alt={article.coverAlt ?? ""}
+            width={1600}
+            height={900}
+            loading="eager"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <MediaPlaceholder
+            size="lg"
+            variant="solid"
+            showText={false}
+            tone={CATEGORY_PLACEHOLDER[article.categorySlug] ?? "primary"}
+            className="absolute inset-0"
+          />
+        )}
+        <span className="absolute left-4 top-4 flex flex-wrap items-center gap-2 sm:left-6 sm:top-6">
+          <span className="rounded bg-background px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-wider text-foreground shadow-sm">
             Em destaque
           </span>
           <CategoryTag slug={article.categorySlug} categories={categories} />
           {article.isDemo && <DemoBadge />}
-            {article.pending && <PendingBadge />}
-        </div>
-        <h2 className="max-w-3xl text-2xl font-bold leading-[1.12] sm:text-3xl md:text-5xl">
+          {article.pending && <PendingBadge />}
+        </span>
+      </Link>
+
+      <div className="p-5 sm:p-7 md:p-8">
+        <h2 className="max-w-3xl font-display text-2xl font-bold leading-tight text-foreground sm:text-3xl md:text-4xl">
           <Link
             to="/noticias/$slug"
             params={{ slug: article.slug }}
-            className="after:absolute after:inset-0 hover:underline hover:decoration-accent hover:decoration-2 hover:underline-offset-4"
+            className="transition-colors hover:text-primary"
           >
             {article.title}
           </Link>
         </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-foreground/90 sm:text-base md:mt-4 md:text-lg">
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base md:mt-4 md:text-lg">
           {article.excerpt}
         </p>
-        <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-foreground/80 sm:text-sm">
-          <Calendar className="size-4" />
-          <time dateTime={article.publishedAt ?? undefined}>{formatOptionalDate(article.publishedAt)}</time>
-          {article.location && <span>· {article.location}</span>}
+        <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 border-t pt-4 text-xs text-muted-foreground sm:text-sm">
+          <span className="inline-flex items-center gap-2">
+            <Calendar className="size-4 text-primary" />
+            <time dateTime={article.publishedAt ?? undefined}>{formatOptionalDate(article.publishedAt)}</time>
+          </span>
+          {article.location && <span>{article.location}</span>}
         </p>
       </div>
     </article>
