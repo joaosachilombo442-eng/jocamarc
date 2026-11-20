@@ -98,6 +98,7 @@ function CooperativePage() {
             {coop.acronym && <Field label="Sigla" value={coop.acronym} />}
             {coop.location && <Field label="Localização" value={coop.location} />}
             {coop.foundedAt && <Field label="Data de fundação" value={formatDate(coop.foundedAt)} />}
+            {coop.registeredAt && <Field label="Data de inscrição" value={formatDate(coop.registeredAt)} />}
             {coop.president && <Field label="Presidente" value={coop.president} />}
             {members && <Field label="Membros" value={members} />}
             {coop.ageRange && <Field label="Faixa etária" value={coop.ageRange} />}
