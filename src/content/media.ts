@@ -263,7 +263,7 @@ export const cooperativeLogos = {
   lusevikueno: logo(logoLusevikueno, "Lusevikueno Kaka", 509, 509),
   raizes: logo(logoRaizes, "Raízes 4As", 800, 642),
   kuyelissa: logo(logoKuyelissa, "Kuyelissa", 800, 566),
-  quatroARecicla: logo(logo4ARecicla, "4A Recicla", 800, 600),
+  quatroARecicla: logo(logo4aRecicla, "4A Recicla", 800, 600),
   ambientalRegente: logo(logoAmbientalRegente, "Ambiental Regente", 800, 600),
   bengoLimpa: logo(logoBengoLimpa, "Bengo Limpa", 800, 600),
   caibvr: logo(logoCaibvr, "CAIBVR", 800, 600),
