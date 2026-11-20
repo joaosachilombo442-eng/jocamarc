@@ -9,7 +9,7 @@ import { PageHeader, Reveal } from "@/components/site/primitives";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { site } from "@/config/site";
-import { cooperativeLocationsQuery, cooperativesQuery, PENDING_LOCATION } from "@/content/api";
+import { cooperativeLocationsQuery, cooperativesQuery } from "@/content/api";
 import { photos } from "@/content/media";
 import { cn } from "@/lib/utils";
 
@@ -58,7 +58,6 @@ function CooperativesPage() {
   const [shown, setShown] = useState(PAGE_SIZE);
   useEffect(() => setShown(PAGE_SIZE), [search.q, search.local]);
 
-  const hasPendingLocation = all.some((c) => !c.location);
   const filtering = Boolean(search.q || search.local);
 
   const onSearch = (e: FormEvent) => {
@@ -69,7 +68,6 @@ function CooperativesPage() {
   const filters = [
     { value: undefined, label: "Todas" },
     ...locations.map((l) => ({ value: l, label: l })),
-    ...(hasPendingLocation ? [{ value: PENDING_LOCATION, label: "Localização a confirmar" }] : []),
   ];
 
   return (
@@ -188,8 +186,8 @@ function CooperativesPage() {
         )}
 
         <p className="mt-12 rounded-xl border border-dashed border-primary/35 bg-primary-soft/60 p-5 text-sm leading-relaxed text-muted-foreground">
-          {all.length} de {site.cooperativesAssociated} cooperativas associadas já registadas. Os dados que
-          ainda não foram fornecidos pelas cooperativas aparecem como “a confirmar”.
+          {all.length} de {site.cooperativesAssociated} cooperativas associadas já registadas. A rede será
+          actualizada progressivamente à medida que novas informações forem disponibilizadas.
         </p>
       </section>
 
