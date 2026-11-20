@@ -201,6 +201,7 @@ export const cooperatives: Cooperative[] = [
     members: { total: 20, men: 15, women: 5 },
     ageRange: "18 a 50 anos",
     materials: ["Plástico", "Papel", "Papelão", "Garrafas", "Alumínio"],
+    logo: logos.ccaac,
   },
   {
     ...blank,
@@ -222,7 +223,7 @@ export const cooperatives: Cooperative[] = [
     members: { total: 10, men: 1, women: 9 },
     ageRange: "20 a 38 anos",
     materials: ["Papelão", "Garrafas", "PET", "Alumínio", "Plásticos"],
-    logo: null,
+    logo: logos.quatroARecicla,
   },
   {
     ...blank,
@@ -250,17 +251,7 @@ export const cooperatives: Cooperative[] = [
     members: { total: 15, men: 7, women: 8 },
     ageRange: "18 a 50 anos",
     materials: ["Papelão", "PET", "Plástico", "Alumínio", "Papel", "Vidros"],
-  },
-  {
-    ...blank,
-  {
-    ...blank,
-    id: "coop-4a-recicla",
-    slug: "4a-recicla",
-    name: "Cooperativa Ambiental 4A Recicla",
-    fullName: "Cooperativa Ambiental 4A Recicla",
-    kind: "Ambiental",
-    logo: logos.quatroARecicla,
+    logo: logos.logoNif5001653008,
   },
   {
     ...blank,
