@@ -258,3 +258,16 @@ export const flyers = {
     height: 639,
   },
 } satisfies Record<string, EventFlyer>;
+
+
+/** Official partner institution logos supplied by AJOCAMARC. */
+export const partnerLogos = {
+  minamb: logoMINAMB,
+  cnj: logoCNJ,
+  minjude: logoMinjude,
+  assembleia: logoAssembleia,
+  inefop: logoINEFOP,
+  anr: logoANR,
+  iaj: logoIAJ,
+  inapem: logoINAPEM,
+} as const;
