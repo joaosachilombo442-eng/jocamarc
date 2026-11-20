@@ -2,6 +2,7 @@
  * NOTÍCIAS — official AJOCAMARC news.
  */
 import type { NewsArticle, NewsCategory } from "./types";
+import { photos } from "./media";
 
 export const newsCategories: NewsCategory[] = [
   { slug: "institucional", name: "Institucional" },
@@ -33,8 +34,8 @@ export const news: NewsArticle[] = [
       "“Do diagnóstico à acção. Dos resíduos ao valor.”"
     ],
     categorySlug: "ambiente",
-    coverImage: null,
-    coverAlt: null,
+    coverImage: photos.centrosTriagem.src,
+    coverAlt: photos.centrosTriagem.alt,
     publishedAt: "2026-10-06",
     author: "AJOCAMARC",
     location: "Auditório do INBAC, Centralidade do Kilamba, Luanda",
