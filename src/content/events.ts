@@ -25,4 +25,4 @@ export const events: EventItem[] = [
 ];
 
 /** Initial number of flyer slots shown in the events gallery (the brief asks for 4 to 5). */
-export const INITIAL_EVENT_SLOTS = 4;
+export const INITIAL_EVENT_SLOTS = 0;
