@@ -109,6 +109,7 @@ export type Cooperative = {
   kind: string | null;
   location: string | null;
   foundedAt: string | null; // ISO date
+  registeredAt: string | null; // ISO date, when the source says registration rather than foundation
   president: string | null;
   members: { total: number; men: number | null; women: number | null } | null;
   ageRange: string | null;
