@@ -277,7 +277,7 @@ export const cooperativeLogos = {
   emblemaJft: logo(logoLogoEmblemaJft, "JFT", 800, 600),
   nif5001653008: logo(logoLogoNif5001653008, "NIF 5001653008", 800, 600),
   mamaSuperLimpinha: logo(logoMamaSuperLimpinha, "Mamá Super Limpinha", 800, 600),
-  muzalanaRecicla: logo(logoMuzalanaRecicla, "Tuzalana Recicla", 800, 600),
+  muzalanaRecicla: logo(logoMuzalanaRecicla, "Muzalana Recicla", 800, 600),
   nuxima: logo(logoNuxima, "Muxima Saudável e Limpo", 800, 600),
   salv: logo(logoSalv, "SALV", 800, 600),
 } satisfies Record<string, CooperativeLogo>;
