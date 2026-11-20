@@ -6,11 +6,11 @@
  * content managed in the future admin panel (see src/content/api.ts).
  * Only example projects remain here; partners stay empty until confirmed.
  *
- * Demo items carry NO photographs: the association's real photos (src/content/media.ts)
- * must never illustrate an invented event, so these render a typographic placeholder.
+ * Project cards may use original AJOCAMARC photographs as thematic illustrations.
+ * These images do not confirm that the example projects took place.
  */
 import type { Partner, Project } from "./types";
-import { partnerLogos } from "./media";
+import { partnerLogos, photos } from "./media";
 
 export const projects: Project[] = [
   {
@@ -20,7 +20,7 @@ export const projects: Project[] = [
     description:
       "Exemplo de ficha de projecto: descrição dos objectivos, das acções realizadas e dos resultados. Substituir pela informação oficial do projecto.",
     area: "Recolha e triagem",
-    images: [],
+    images: [{ src: photos.triagemCartao.src, alt: photos.triagemCartao.alt }],
     date: "2026",
     location: "Luanda",
     institutions: [],
@@ -34,7 +34,7 @@ export const projects: Project[] = [
     description:
       "Exemplo de ficha de projecto dedicada à organização e capacitação das cooperativas de catadores.",
     area: "Organização cooperativa",
-    images: [],
+    images: [{ src: photos.encontroArLivre.src, alt: photos.encontroArLivre.alt }],
     date: "2026",
     location: "Luanda",
     institutions: [],
@@ -48,7 +48,7 @@ export const projects: Project[] = [
     description:
       "Exemplo de ficha de projecto sobre sessões de sensibilização para a separação de resíduos.",
     area: "Sensibilização ambiental",
-    images: [],
+    images: [{ src: photos.reciclagemPapel.src, alt: photos.reciclagemPapel.alt }],
     date: "2026",
     location: "Luanda",
     institutions: [],
