@@ -1,11 +1,10 @@
 /**
  * COOPERATIVAS INTEGRADAS — confirmed records only.
  *
- * AJOCAMARC has 150 associated cooperatives (see `site.cooperativesAssociated`); they are
- * registered here progressively. Mbongo Paxi and Dilangangu Kuanzambi carry the details
- * supplied by the association; the other six are known only from the logos they supplied,
- * so they carry just what is printed on the logo (name, kind, NIF). Every other field stays
- * null and renders "A confirmar" — never fill it in without confirmation.
+ * AJOCAMARC has 150 associated cooperatives (see `site.cooperativesAssociated`); records
+ * are registered progressively. Each entry contains only information supplied by the
+ * association or clearly printed on its original logo. Unprovided fields remain null or
+ * empty — never infer or invent missing information.
  */
 import { cooperativeLogos as logos } from "./media";
 import type { Cooperative } from "./types";
