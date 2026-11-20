@@ -117,7 +117,7 @@ export const actionAreas: ActionArea[] = [
     description: "Informação e educação comunitária sobre a separação de resíduos e a reciclagem.",
     Icon: Megaphone,
     tone: "blue",
-    photo: null,
+    photo: photos.reciclagemPapel,
   },
   {
     title: "Inclusão social e juventude",
