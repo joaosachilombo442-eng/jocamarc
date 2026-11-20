@@ -180,7 +180,7 @@ export function FeaturedNews({
         />
       )}
       <div className="card-scrim absolute inset-0 -z-10" aria-hidden />
-      <div className="flex min-h-[26rem] flex-col justify-end p-6 text-ink-foreground sm:p-10 md:min-h-[32rem]">
+      <div className="flex min-h-[24rem] flex-col justify-end gap-0 p-5 text-ink-foreground sm:min-h-[28rem] sm:p-8 md:min-h-[32rem] md:p-10">
         <div className="mb-4 flex flex-wrap items-center gap-2">
           <span className="rounded bg-ink-foreground px-2 py-0.5 text-[0.7rem] font-bold uppercase tracking-wider text-ink">
             Em destaque
@@ -189,7 +189,7 @@ export function FeaturedNews({
           {article.isDemo && <DemoBadge />}
             {article.pending && <PendingBadge />}
         </div>
-        <h2 className="max-w-3xl text-3xl font-bold leading-tight md:text-5xl">
+        <h2 className="max-w-3xl text-2xl font-bold leading-[1.12] sm:text-3xl md:text-5xl">
           <Link
             to="/noticias/$slug"
             params={{ slug: article.slug }}
@@ -198,10 +198,10 @@ export function FeaturedNews({
             {article.title}
           </Link>
         </h2>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-foreground/85 md:text-lg">
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-foreground/90 sm:text-base md:mt-4 md:text-lg">
           {article.excerpt}
         </p>
-        <p className="mt-5 flex items-center gap-2 text-sm text-ink-muted">
+        <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-foreground/80 sm:text-sm">
           <Calendar className="size-4" />
           <time dateTime={article.publishedAt ?? undefined}>{formatOptionalDate(article.publishedAt)}</time>
           {article.location && <span>· {article.location}</span>}
