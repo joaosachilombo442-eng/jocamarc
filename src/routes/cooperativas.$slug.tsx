@@ -96,10 +96,10 @@ function CooperativePage() {
           <dl className="border-t">
             <Field label="Designação" value={coop.fullName ?? coop.name} />
             {coop.acronym && <Field label="Sigla" value={coop.acronym} />}
-            {coop.location && <Field label="Localização" value={coop.location} />}
+            <Field label="Localização" value={coop.location ?? "A confirmar"} />
             {coop.foundedAt && <Field label="Data de fundação" value={formatDate(coop.foundedAt)} />}
             {coop.registeredAt && <Field label="Data de inscrição" value={formatDate(coop.registeredAt)} />}
-            {coop.president && <Field label="Presidente" value={coop.president} />}
+            <Field label="Presidente" value={coop.president ?? "A confirmar"} />
             {members && <Field label="Membros" value={members} />}
             {coop.ageRange && <Field label="Faixa etária" value={coop.ageRange} />}
             <Field
@@ -121,9 +121,9 @@ function CooperativePage() {
         </div>
 
         <aside className="space-y-6">
-          {coop.phones.length > 0 && (
-            <div className="rounded-2xl border bg-card p-6 shadow-soft">
-              <h2 className="font-display text-lg font-bold">Contactos</h2>
+          <div className="rounded-2xl border bg-card p-6 shadow-soft">
+            <h2 className="font-display text-lg font-bold">Contactos</h2>
+            {coop.phones.length > 0 ? (
               <ul className="mt-4 space-y-3">
                 {coop.phones.map((p) => (
                   <li key={p.tel}>
@@ -135,8 +135,10 @@ function CooperativePage() {
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
+            ) : (
+              <p className="mt-3 text-sm text-muted-foreground">Contacto: A confirmar</p>
+            )}
+          </div>
 
         </aside>
       </section>
