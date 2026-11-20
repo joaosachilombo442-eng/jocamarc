@@ -120,9 +120,9 @@ function CooperativePage() {
         </div>
 
         <aside className="space-y-6">
-          <div className="rounded-2xl border bg-card p-6 shadow-soft">
-            <h2 className="font-display text-lg font-bold">Contactos</h2>
-            {coop.phones.length > 0 ? (
+          {coop.phones.length > 0 && (
+            <div className="rounded-2xl border bg-card p-6 shadow-soft">
+              <h2 className="font-display text-lg font-bold">Contactos</h2>
               <ul className="mt-4 space-y-3">
                 {coop.phones.map((p) => (
                   <li key={p.tel}>
@@ -134,14 +134,9 @@ function CooperativePage() {
                   </li>
                 ))}
               </ul>
-            ) : (
-              <p className="mt-3 text-sm italic text-muted-foreground">Contactos {PENDING_LABEL.toLowerCase()}.</p>
-            )}
-          </div>
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            Informação fornecida pela AJOCAMARC. Os campos “a confirmar” serão completados quando a cooperativa
-            disponibilizar os dados.
-          </p>
+            </div>
+          )}
+
         </aside>
       </section>
 
