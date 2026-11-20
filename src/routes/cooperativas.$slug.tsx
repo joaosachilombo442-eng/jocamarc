@@ -79,8 +79,8 @@ function CooperativePage() {
           >
             <ArrowLeft className="size-4" /> Cooperativas Integradas
           </Link>
-          <div className="grid gap-8 md:grid-cols-[16rem_1fr] md:items-center">
-            <CooperativeLogo coop={coop} className="aspect-square w-48 p-4 shadow-soft md:w-64" />
+          <div className={coop.logo ? "grid gap-8 md:grid-cols-[16rem_1fr] md:items-center" : "grid gap-8"}>
+            {coop.logo && <CooperativeLogo coop={coop} className="aspect-square w-48 p-4 shadow-soft md:w-64" />}
             <div>
               <p className="eyebrow mb-3">{coop.kind ? `Cooperativa · ${coop.kind}` : "Cooperativa"}</p>
               <h1 className="text-4xl font-extrabold leading-[1.05] md:text-5xl">{coop.name}</h1>
