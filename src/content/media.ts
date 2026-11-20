@@ -34,23 +34,23 @@ import logoLusevikueno from "@/assets/cooperativas/lusevikueno-kaka-logotipo.web
 import logoMbongoPaxi from "@/assets/cooperativas/mbongo-paxi-logotipo.webp.asset.json";
 import logoNakulima from "@/assets/cooperativas/nakulima-csbn-logotipo.webp.asset.json";
 import logoRaizes from "@/assets/cooperativas/raizes-4as-logotipo.webp.asset.json";
-import logo4aRecicla from "@/assets/cooperativas/4a-recicla.webp";
-import logoAmbientalRegente from "@/assets/cooperativas/ambiental-regente.webp";
-import logoBengoLimpa from "@/assets/cooperativas/bengo-limpa.webp";
-import logoCaibvr from "@/assets/cooperativas/caibvr.webp";
-import logoCalumbo from "@/assets/cooperativas/calumbo.webp";
-import logoCcaac from "@/assets/cooperativas/ccaac.webp";
-import logoCoamcib from "@/assets/cooperativas/coamcib.webp";
-import logoCooperbengo from "@/assets/cooperativas/cooperbengo.webp";
-import logoDecsu from "@/assets/cooperativas/decsu.webp";
-import logoJovensUnidos from "@/assets/cooperativas/jovens-unidos.webp";
-import logoJurdsp from "@/assets/cooperativas/jurdsp.webp";
-import logoLogoEmblemaJft from "@/assets/cooperativas/logo-emblema-jft.webp";
-import logoLogoNif5001653008 from "@/assets/cooperativas/logo-nif-5001653008.webp";
-import logoMamaSuperLimpinha from "@/assets/cooperativas/mama-super-limpinha.webp";
-import logoMuzalanaRecicla from "@/assets/cooperativas/muzalana-recicla.webp";
-import logoNuxima from "@/assets/cooperativas/nuxima.webp";
-import logoSalv from "@/assets/cooperativas/salv.webp";
+import logo4aRecicla from "@/assets/cooperativas/4a-recicla.webp.asset.json";
+import logoAmbientalRegente from "@/assets/cooperativas/ambiental-regente.webp.asset.json";
+import logoBengoLimpa from "@/assets/cooperativas/bengo-limpa.webp.asset.json";
+import logoCaibvr from "@/assets/cooperativas/caibvr.webp.asset.json";
+import logoCalumbo from "@/assets/cooperativas/calumbo.webp.asset.json";
+import logoCcaac from "@/assets/cooperativas/ccaac.webp.asset.json";
+import logoCoamcib from "@/assets/cooperativas/coamcib.webp.asset.json";
+import logoCooperbengo from "@/assets/cooperativas/cooperbengo.webp.asset.json";
+import logoDecsu from "@/assets/cooperativas/decsu.webp.asset.json";
+import logoJovensUnidos from "@/assets/cooperativas/jovens-unidos.webp.asset.json";
+import logoJurdsp from "@/assets/cooperativas/jurdsp.webp.asset.json";
+import logoLogoEmblemaJft from "@/assets/cooperativas/logo-emblema-jft.webp.asset.json";
+import logoLogoNif5001653008 from "@/assets/cooperativas/logo-nif-5001653008.webp.asset.json";
+import logoMamaSuperLimpinha from "@/assets/cooperativas/mama-super-limpinha.webp.asset.json";
+import logoMuzalanaRecicla from "@/assets/cooperativas/muzalana-recicla.webp.asset.json";
+import logoNuxima from "@/assets/cooperativas/nuxima.webp.asset.json";
+import logoSalv from "@/assets/cooperativas/salv.webp.asset.json";
 import flyerDande from "@/assets/eventos/conferencia-municipal-dande-cartaz.webp.asset.json";
 import logoMinjude from "@/assets/minjude.webp";
 import logoANR from "@/assets/anr.webp";
@@ -272,23 +272,23 @@ export const cooperativeLogos = {
   lusevikueno: logo(logoLusevikueno, "Lusevikueno Kaka", 509, 509),
   raizes: logo(logoRaizes, "Raízes 4As", 800, 642),
   kuyelissa: logo(logoKuyelissa, "Kuyelissa", 800, 566),
-  quatroARecicla: logo(logo4aRecicla, "4A Recicla", 800, 600),
-  ambientalRegente: logo(logoAmbientalRegente, "Ambiental Regente", 800, 600),
-  bengoLimpa: logo(logoBengoLimpa, "Bengo Limpa", 800, 600),
-  caibvr: logo(logoCaibvr, "CAIBVR", 800, 600),
-  calumbo: logo(logoCalumbo, "Calumbo", 800, 600),
-  ccaac: logo(logoCcaac, "CCAAC", 800, 600),
-  coamcib: logo(logoCoamcib, "COAMCIB", 800, 600),
-  cooperbengo: logo(logoCooperbengo, "COOPERBENGO", 800, 600),
-  decsu: logo(logoDecsu, "DECSU", 800, 600),
-  jovensUnidos: logo(logoJovensUnidos, "Jovens Unidos", 800, 600),
-  jurdsp: logo(logoJurdsp, "JURDSP", 800, 600),
-  emblemaJft: logo(logoLogoEmblemaJft, "JFT", 800, 600),
-  nif5001653008: logo(logoLogoNif5001653008, "NIF 5001653008", 800, 600),
-  mamaSuperLimpinha: logo(logoMamaSuperLimpinha, "Mamá Super Limpinha", 800, 600),
-  muzalanaRecicla: logo(logoMuzalanaRecicla, "Muzalana Recicla", 800, 600),
-  nuxima: logo(logoNuxima, "Muxima Saudável e Limpo", 800, 600),
-  salv: logo(logoSalv, "SALV", 800, 600),
+  quatroARecicla: logo(logo4aRecicla, "44 Recicla", 1599, 867),
+  ambientalRegente: logo(logoAmbientalRegente, "Ambiental Regente", 640, 640),
+  bengoLimpa: logo(logoBengoLimpa, "Bengo Limpa", 640, 640),
+  caibvr: logo(logoCaibvr, "CAIBVR", 1024, 1024),
+  calumbo: logo(logoCalumbo, "Calumbo", 1599, 1594),
+  ccaac: logo(logoCcaac, "CCAAC", 492, 461),
+  coamcib: logo(logoCoamcib, "COAMCIB", 640, 640),
+  cooperbengo: logo(logoCooperbengo, "COOPERBENGO", 1600, 1503),
+  decsu: logo(logoDecsu, "DECSU", 569, 569),
+  jovensUnidos: logo(logoJovensUnidos, "Jovens Unidos", 521, 521),
+  jurdsp: logo(logoJurdsp, "JURDSP", 1484, 1060),
+  emblemaJft: logo(logoLogoEmblemaJft, "J.T. — Comércio e Prestação de Serviços / João Tomás", 714, 1599),
+  nif5001653008: logo(logoLogoNif5001653008, "Ambiental Lunguzo", 1599, 1131),
+  mamaSuperLimpinha: logo(logoMamaSuperLimpinha, "Mamá Super Limpinha", 720, 970),
+  muzalanaRecicla: logo(logoMuzalanaRecicla, "Muzalana Recicla", 1599, 867),
+  nuxima: logo(logoNuxima, "Muxima Saudável e Limpo", 1599, 867),
+  salv: logo(logoSalv, "SALV", 720, 1392),
 } satisfies Record<string, CooperativeLogo>;
 
 /* ---------- Event flyers (supplied by AJOCAMARC) ---------- */

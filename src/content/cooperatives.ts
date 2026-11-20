@@ -344,6 +344,7 @@ export const cooperatives: Cooperative[] = [
     name: "Cooperativa Ambiental Zango Saudável e Limpo",
     fullName: "Cooperativa Ambiental Zango Saudável e Limpo",
     kind: "Ambiental",
+    logo: null,
   },
   {
     ...blank,
@@ -352,6 +353,7 @@ export const cooperatives: Cooperative[] = [
     name: "Cooperativa Ambiental Zango Recicla",
     fullName: "Cooperativa Ambiental Zango Recicla",
     kind: "Ambiental",
+    logo: null,
   },
   {
     ...blank,
@@ -362,5 +364,6 @@ export const cooperatives: Cooperative[] = [
     acronym: "CAJS",
     nif: "5001405373",
     kind: "Ambiental",
+    logo: null,
   },
 ];

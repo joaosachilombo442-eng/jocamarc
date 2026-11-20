@@ -40,3 +40,4 @@ use the editor.
 - Area-of-work cards (`ActivityCards`) may show an original photo of that kind of work; example projects/news never get a photo. Why: real photos may illustrate real work, never invented events.
 - Confirmed records live in their own source files (`src/content/cooperatives.ts`, `events.ts`, `news.ts`); a field the association has not supplied is `null` and renders "A confirmar". Why: lets the admin panel replace each source without touching pages, and keeps unsupplied data visibly pending.
 - Renamed public URLs keep a 301 redirect route at the old path (e.g. `/historia`, `/cooperativas-parceiros`). Why: the site is published and old links must keep working.
+- Cooperative logos use explicit named CDN pointers in the central media registry, with their actual dimensions; missing logos are null, never positional fallbacks. Why: prevents entity mix-ups and broken asset-object references.

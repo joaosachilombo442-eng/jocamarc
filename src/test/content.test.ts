@@ -176,11 +176,12 @@ describe("Official mission, vision and values", () => {
 });
 
 describe("Cooperativas integradas", () => {
-  it("registers 8 cooperatives initially, each with its supplied logo", async () => {
+  it("preserves the eight original cooperatives with their supplied logos", async () => {
     const coops = await listCooperatives();
-    expect(coops).toHaveLength(8);
+    expect(coops).toHaveLength(28);
+    const original = coops.slice(0, 8);
     const logos = new Set(Object.values(cooperativeLogos).map((l) => l.src));
-    expect(coops.every((c) => c.logo !== null && logos.has(c.logo.src))).toBe(true);
+    expect(original.every((c) => c.logo !== null && logos.has(c.logo.src))).toBe(true);
     expect([...logos].every((src) => src.startsWith("/__l5e/assets-v1/"))).toBe(true);
   });
 
@@ -206,7 +207,7 @@ describe("Cooperativas integradas", () => {
 
   it("the other six cooperatives have no invented president, members, location or contacts", async () => {
     const coops = await listCooperatives();
-    const others = coops.filter((c) => !["mbongo-paxi", "dilangangu-kuanzambi"].includes(c.slug));
+    const others = coops.slice(0, 8).filter((c) => !["mbongo-paxi", "dilangangu-kuanzambi"].includes(c.slug));
     expect(others).toHaveLength(6);
     for (const c of others) {
       expect(c.president).toBeNull();
@@ -222,8 +223,8 @@ describe("Cooperativas integradas", () => {
     expect((await listCooperatives({ q: "raizes" })).map((c) => c.slug)).toEqual(["raizes-4as"]);
     expect((await listCooperatives({ q: "CSBN" })).map((c) => c.slug)).toEqual(["nakulima"]);
     expect((await listCooperatives({ location: "Cacuaco, Luanda" })).map((c) => c.slug)).toEqual(["mbongo-paxi"]);
-    expect(await listCooperatives({ location: PENDING_LOCATION })).toHaveLength(7);
-    expect(await listCooperativeLocations()).toEqual(["Cacuaco, Luanda"]);
+    expect(await listCooperatives({ location: PENDING_LOCATION })).toHaveLength(26);
+    expect(await listCooperativeLocations()).toEqual(["Cacuaco, Luanda", "Luanda, Angola"]);
   });
 });
 
