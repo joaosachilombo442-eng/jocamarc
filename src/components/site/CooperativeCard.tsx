@@ -11,8 +11,7 @@ export function CooperativeLogo({ coop, className }: { coop: Cooperative; classN
   if (!coop.logo) return null;
   return (
     <div className={cn("relative grid place-items-center overflow-hidden rounded-xl border bg-background p-3", className)}>
-      {(
-        <img
+      <img
           src={coop.logo.src}
           alt={coop.logo.alt}
           width={coop.logo.width}
@@ -20,7 +19,6 @@ export function CooperativeLogo({ coop, className }: { coop: Cooperative; classN
           loading="lazy"
           className="absolute inset-0 h-full w-full object-contain p-[inherit]"
         />
-      )}
     </div>
   );
 }
@@ -34,7 +32,7 @@ export function CooperativeCard({ coop, index }: { coop: Cooperative; index: num
       )}
     >
       {coop.logo && <CooperativeLogo coop={coop} className="aspect-[4/3] w-full" />}
-      <div className="mt-5 flex flex-1 flex-col">
+      <div className={`${coop.logo ? "mt-5" : "mt-0"} flex flex-1 flex-col`}>
         {coop.kind && (
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">{coop.kind}</p>
         )}
