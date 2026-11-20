@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, ImageIcon, MapPin, Users } from "lucide-react";
 
-import { PENDING_LABEL } from "@/config/site";
 import type { Cooperative } from "@/content/types";
 import { cn } from "@/lib/utils";
 
@@ -53,13 +52,13 @@ export function CooperativeCard({ coop, index }: { coop: Cooperative; index: num
           </Link>
         </h3>
         <dl className="mt-4 space-y-2 text-sm">
-          <div className="flex items-start gap-2">
-            <dt className="sr-only">Localização</dt>
-            <MapPin className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
-            <dd className={coop.location ? "font-medium" : "italic text-muted-foreground"}>
-              {coop.location ?? `Localização ${PENDING_LABEL.toLowerCase()}`}
-            </dd>
-          </div>
+          {coop.location && (
+            <div className="flex items-start gap-2">
+              <dt className="sr-only">Localização</dt>
+              <MapPin className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
+              <dd className="font-medium">{coop.location}</dd>
+            </div>
+          )}
           {coop.members && (
             <div className="flex items-start gap-2">
               <dt className="sr-only">Membros</dt>
