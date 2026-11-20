@@ -6,6 +6,7 @@
  * association has not confirmed are left out. `position` is the CSS object-position used
  * when a photo is cropped, chosen so people and key details stay in frame.
  */
+import fotoCentrosTriagem from "@/assets/photos/ajocamarc-relatorio-residuos-2025.webp";
 import camiao from "@/assets/photos/camiao-garrafas-plastico.webp.asset.json";
 import catadoresContentor from "@/assets/photos/campo-catadores-contentor.webp.asset.json";
 import triagemCartao from "@/assets/photos/campo-catadores-triagem-cartao.webp.asset.json";
@@ -74,6 +75,14 @@ const p = (
 ): SitePhoto => ({ id, src: asset.url, alt, width, height, position });
 
 export const photos = {
+  centrosTriagem: {
+    id: "centros-triagem-comunitaria",
+    src: fotoCentrosTriagem,
+    alt: "Fotografia do Relatório Anual de Resíduos de Angola 2025, utilizada na notícia sobre a defesa de Centros de Triagem Comunitária pela AJOCAMARC",
+    width: 1440,
+    height: 959,
+    position: "50% 50%",
+  },
   grupoRua: p(
     "grupo-rua",
     grupoRua,
