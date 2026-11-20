@@ -6,7 +6,6 @@ import type { ReactNode } from "react";
 import { CooperativeLogo } from "@/components/site/CooperativeCard";
 import { CtaBand } from "@/components/site/CtaBand";
 import { Button } from "@/components/ui/button";
-import { PENDING_LABEL } from "@/config/site";
 import { cooperativeBySlugQuery } from "@/content/api";
 import { formatDate } from "@/lib/format";
 
@@ -48,10 +47,11 @@ export const Route = createFileRoute("/cooperativas/$slug")({
 });
 
 function Field({ label, value }: { label: string; value: ReactNode | null }) {
+  if (value === null || value === undefined || value === "") return null;
   return (
     <div className="grid gap-1 border-b py-4 sm:grid-cols-[12rem_1fr] sm:gap-6">
       <dt className="text-sm font-medium text-muted-foreground">{label}</dt>
-      <dd className={value ? "font-medium" : "italic text-muted-foreground"}>{value ?? PENDING_LABEL}</dd>
+      <dd className="font-medium">{value}</dd>
     </div>
   );
 }
@@ -96,10 +96,10 @@ function CooperativePage() {
           <dl className="border-t">
             <Field label="Designação" value={coop.fullName ?? coop.name} />
             {coop.acronym && <Field label="Sigla" value={coop.acronym} />}
-            <Field label="Localização" value={coop.location} />
-            <Field label="Data de fundação" value={coop.foundedAt ? formatDate(coop.foundedAt) : null} />
-            <Field label="Presidente" value={coop.president} />
-            <Field label="Membros" value={members} />
+            {coop.location && <Field label="Localização" value={coop.location} />}
+            {coop.foundedAt && <Field label="Data de fundação" value={formatDate(coop.foundedAt)} />}
+            {coop.president && <Field label="Presidente" value={coop.president} />}
+            {members && <Field label="Membros" value={members} />}
             {coop.ageRange && <Field label="Faixa etária" value={coop.ageRange} />}
             <Field
               label="Materiais"
@@ -115,7 +115,7 @@ function CooperativePage() {
                 ) : null
               }
             />
-            <Field label="NIF" value={coop.nif} />
+            {coop.nif && <Field label="NIF" value={coop.nif} />}
           </dl>
         </div>
 
