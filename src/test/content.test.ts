@@ -144,9 +144,11 @@ describe("Confirmed contacts and fiscal identity", () => {
 });
 
 describe("Activity cards use only original photographs", () => {
-  it("every area photo is one supplied by AJOCAMARC", () => {
+  it("every homepage action area has a supplied original photograph", () => {
     const supplied = new Set(Object.values(photos).map((p) => p.src));
+    expect(actionAreas).toHaveLength(5);
     for (const area of actionAreas) {
+      expect(area.photo, area.title).not.toBeNull();
       if (area.photo) expect(supplied.has(area.photo.src)).toBe(true);
     }
   });
