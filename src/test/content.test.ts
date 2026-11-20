@@ -90,11 +90,15 @@ describe("Only original AJOCAMARC photographs", () => {
     expect([...supplied].every((src) => src.startsWith("/__l5e/assets-v1/"))).toBe(true);
   });
 
-  it("news without a supplied photo and demo projects carry no photograph", async () => {
+  it("news without a supplied photo stays empty and demo project images are original thematic photos", async () => {
     const { items } = await listNews({ page: 1 });
     expect(items.every((n) => n.coverImage === null)).toBe(true);
     const projects = await listProjects();
-    expect(projects.filter((p) => p.isDemo).every((p) => p.images.length === 0)).toBe(true);
+    const demos = projects.filter((p) => p.isDemo);
+    expect(demos).toHaveLength(4);
+    expect(demos.slice(0, 3).every((p) => p.images.length === 1)).toBe(true);
+    expect(demos.slice(0, 3).flatMap((p) => p.images).every((image) => supplied.has(image.src))).toBe(true);
+    expect(demos[3]?.images).toEqual([]);
   });
 });
 
