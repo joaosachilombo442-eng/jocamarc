@@ -62,7 +62,12 @@ export const projects: Project[] = [
     description:
       "Exemplo de ficha de actividade sobre mobilização de jovens para a limpeza de ruas e zonas costeiras.",
     area: "Comunidade",
-    images: [],
+    images: [
+      {
+        src: photos.equipaContentorRua.src,
+        alt: "Membros da equipa caminham entre catadores e materiais recolhidos junto a um contentor, numa rua da cidade. Fotografia ilustrativa de actividade comunitária.",
+      },
+    ],
     date: "2026",
     location: "Luanda",
     institutions: [],
