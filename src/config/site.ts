@@ -55,13 +55,12 @@ export const site = {
 } as const;
 
 export const mainNav = [
-  { to: "/", label: "Início", full: "Início" },
-  { to: "/sobre-nos", label: "Sobre Nós", full: "Sobre Nós" },
-  { to: "/missao-visao-valores", label: "Missão", full: "Missão, Visão e Valores" },
-  { to: "/actividades", label: "Actividades", full: "Actividades e Projectos" },
-  { to: "/cooperativas", label: "Cooperativas", full: "Cooperativas Integradas" },
-  { to: "/noticias", label: "Notícias e Eventos", full: "Notícias e Eventos" },
-  { to: "/portfolio", label: "Portfólio", full: "Portfólio" },
+  { to: "/sobre-nos", label: "Quem Somos", full: "Quem Somos" },
+  { to: "/actividades", label: "O Que Fazemos", full: "O Que Fazemos" },
+  { to: "/cooperativas", label: "A Nossa Rede", full: "A Nossa Rede" },
+  { to: "/sobre-nos", label: "Parcerias", full: "Parcerias" },
+  { to: "/noticias", label: "Notícias", full: "Notícias e Eventos" },
+  { to: "/contactos", label: "Contactos", full: "Contactos" },
 ] as const;
 
 export const PENDING_LABEL = "A confirmar";
