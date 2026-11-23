@@ -30,7 +30,7 @@ export function SiteFooter() {
             Instituição
           </h2>
           <ul className="space-y-2.5 text-sm">
-            {mainNav.slice(0, 5).map((item) => (
+            {mainNav.slice(0, 4).map((item) => (
               <li key={item.to}>
                 <Link to={item.to} {...(item.label === "Parcerias" ? { hash: "parceiros" } : {})} className="text-ink-foreground/85 transition-colors hover:text-accent">
                   {item.full}
