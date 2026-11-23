@@ -76,7 +76,7 @@ function Hero() {
           {site.tagline}
         </p>
         <h1 className="max-w-3xl animate-fade-up text-4xl font-extrabold leading-[1.02] [animation-delay:80ms] sm:text-5xl md:text-7xl">
-          Jovens catadores a transformar resíduos em futuro
+          Catadores de materiais recicláveis a transformar resíduos em valor
         </h1>
         <p className="mt-6 max-w-2xl animate-fade-up text-lg leading-relaxed text-ink-foreground/85 [animation-delay:160ms] md:text-xl">
           A {site.shortName} — {site.fullName} — trabalha pela organização e representação dos
@@ -121,7 +121,7 @@ function About() {
       <Reveal delay={100}>
         <p className="eyebrow mb-3">Quem somos</p>
         <h2 className="text-3xl font-bold leading-tight md:text-5xl">
-          Uma associação feita por jovens catadores
+          Uma associação de representação dos catadores
         </h2>
         <div className="prose-site mt-6 text-muted-foreground">
           <p>
