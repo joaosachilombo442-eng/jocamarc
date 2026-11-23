@@ -87,7 +87,7 @@ function ContactPage() {
       <PageHeader
         eyebrow="Fale connosco"
         title="Contactos"
-        description="Para cooperação institucional, imprensa ou informações sobre o trabalho dos jovens catadores, escreva-nos."
+        description="Para cooperação institucional, imprensa ou informações sobre o trabalho da AJOCAMARC e dos catadores de materiais recicláveis, escreva-nos."
         crumbs={[{ label: "Contactos" }]}
       />
 
