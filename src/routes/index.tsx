@@ -12,6 +12,7 @@ import { CooperativeLogo } from "@/components/site/CooperativeCard";
 import {
   cooperativesQuery,
   latestNewsQuery,
+  newsCategoriesQuery,
   partnersQuery,
 } from "@/content/api";
 import { photos } from "@/content/media";
