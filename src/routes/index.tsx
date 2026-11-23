@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 
 import { FeaturedNews, NewsCard } from "@/components/news/NewsCard";
 import { ActivityGrid } from "@/components/site/ActivityCards";
