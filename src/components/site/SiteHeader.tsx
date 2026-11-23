@@ -75,7 +75,7 @@ export function SiteHeader() {
               </div>
               <nav aria-label="Navegação móvel" className="flex-1 overflow-y-auto px-3 py-4">
                 <ul className="space-y-1">
-                  {[...mainNav, { to: "/contactos", label: "Contactos", full: "Contactos" } as const].map(
+                  {mainNav.map(
                     (item) => (
                       <li key={item.to}>
                         <Link
