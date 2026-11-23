@@ -19,9 +19,8 @@ export function SiteFooter() {
           </div>
           <p className="font-display text-base font-semibold leading-snug">{site.fullName}</p>
           <p className="max-w-sm text-sm leading-relaxed text-ink-muted">
-            A {site.shortName} reúne jovens catadores de materiais recicláveis em Angola. Nascida de
-            uma iniciativa em {site.origin.place}, em {site.origin.year}, foi constituída em{" "}
-            {site.foundedYear}, e conta hoje com {site.cooperativesAssociated} cooperativas associadas.
+            A {site.shortName} promove a organização, representação e valorização dos catadores
+            de materiais recicláveis, contribuindo para uma economia circular mais inclusiva em Angola.
           </p>
           <CommunityButtons tone="dark" size="default" stacked className="max-w-sm" />
         </div>
@@ -33,7 +32,7 @@ export function SiteFooter() {
           <ul className="space-y-2.5 text-sm">
             {mainNav.slice(0, 5).map((item) => (
               <li key={item.to}>
-                <Link to={item.to} className="text-ink-foreground/85 transition-colors hover:text-accent">
+                <Link to={item.to} hash={item.label === "Parcerias" ? "parceiros" : undefined} className="text-ink-foreground/85 transition-colors hover:text-accent">
                   {item.full}
                 </Link>
               </li>
