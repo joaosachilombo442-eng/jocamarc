@@ -45,7 +45,7 @@ export function SiteFooter() {
             Acompanhe
           </h2>
           <ul className="space-y-2.5 text-sm">
-            {mainNav.slice(5).map((item) => (
+            {mainNav.slice(4, 5).map((item) => (
               <li key={item.to}>
                 <Link to={item.to} className="text-ink-foreground/85 transition-colors hover:text-accent">
                   {item.full}
