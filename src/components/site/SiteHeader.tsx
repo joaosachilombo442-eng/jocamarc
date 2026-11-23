@@ -37,6 +37,7 @@ export function SiteHeader() {
               <li key={item.to}>
                 <Link
                   to={item.to}
+                  hash={item.label === "Parcerias" ? "parceiros" : undefined}
                   title={item.full}
                   activeOptions={{ exact: item.to === "/" }}
                   className="relative rounded-md px-3 py-2 text-[0.9rem] font-medium text-muted-foreground transition-colors hover:text-foreground data-[status=active]:text-primary-deep data-[status=active]:after:absolute data-[status=active]:after:inset-x-3 data-[status=active]:after:-bottom-0.5 data-[status=active]:after:h-0.5 data-[status=active]:after:rounded-full data-[status=active]:after:bg-accent"
@@ -79,6 +80,7 @@ export function SiteHeader() {
                       <li key={item.to}>
                         <Link
                           to={item.to}
+                          hash={item.label === "Parcerias" ? "parceiros" : undefined}
                           onClick={() => setOpen(false)}
                           activeOptions={{ exact: item.to === "/" }}
                           className="flex items-center justify-between rounded-lg px-3 py-3 text-base font-medium text-foreground transition-colors hover:bg-muted data-[status=active]:bg-primary-soft data-[status=active]:text-primary-deep"
