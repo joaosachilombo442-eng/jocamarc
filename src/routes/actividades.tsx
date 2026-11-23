@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ActivityGrid } from "@/components/site/ActivityCards";
 import { CtaBand } from "@/components/site/CtaBand";
 import { MediaPlaceholder, type PlaceholderTone } from "@/components/site/MediaPlaceholder";
-import { DemoBadge, DemoNotice, PageHeader, Reveal, SectionHeading } from "@/components/site/primitives";
+import { PendingContent, PageHeader, Reveal, SectionHeading } from "@/components/site/primitives";
 import { projectsQuery } from "@/content/api";
 import { photos } from "@/content/media";
 import { iconForArea } from "@/content/institutional";
@@ -41,9 +41,10 @@ const PLACEHOLDER_TONES: PlaceholderTone[] = ["primary", "accent", "blue", "deep
 
 function ActivitiesPage() {
   const { data: projects } = useSuspenseQuery(projectsQuery());
-  const areas = ["Todas", ...Array.from(new Set(projects.map((p) => p.area)))];
+  const publishedProjects = projects.filter((p) => !p.isDemo);
+  const areas = ["Todas", ...Array.from(new Set(publishedProjects.map((p) => p.area)))];
   const [area, setArea] = useState("Todas");
-  const visible = area === "Todas" ? projects : projects.filter((p) => p.area === area);
+  const visible = area === "Todas" ? publishedProjects : publishedProjects.filter((p) => p.area === area);
 
   return (
     <>
@@ -67,15 +68,10 @@ function ActivitiesPage() {
       <section className="bg-secondary py-20 md:py-24">
         <div className="container-site">
           <SectionHeading eyebrow="Iniciativas" title="Projectos e actividades" />
-          {projects.some((p) => p.isDemo) && (
-            <div className="mb-8">
-              <DemoNotice>
-                As fichas abaixo são exemplos que mostram como cada projecto será apresentado. Serão
-                substituídas pelos projectos oficiais através do futuro painel de gestão de conteúdos.
-              </DemoNotice>
-            </div>
-          )}
 
+
+          {publishedProjects.length > 0 ? (
+          <>
           <div role="tablist" aria-label="Filtrar por área" className="mb-10 flex flex-wrap gap-2">
             {areas.map((a) => (
               <button
@@ -124,7 +120,6 @@ function ActivitiesPage() {
                           {STATUS[p.status].label}
                         </span>
                       )}
-                      {p.isDemo && <DemoBadge />}
                     </div>
                     <h3 className="text-2xl font-bold leading-snug">{p.title}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
@@ -156,6 +151,10 @@ function ActivitiesPage() {
               </Reveal>
             ))}
           </ul>
+          </>
+          ) : (
+            <PendingContent hint="As actividades e os projectos oficiais serão apresentados aqui depois de a AJOCAMARC validar e fornecer os respectivos dados." />
+          )}
         </div>
       </section>
 
