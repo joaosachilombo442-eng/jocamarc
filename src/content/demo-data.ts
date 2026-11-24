@@ -1,10 +1,10 @@
 /**
  * DEMONSTRATION DATA — layout samples only.
  *
- * Nothing in this file is an official AJOCAMARC publication. Every item carries
- * `isDemo: true` and renders with an "Exemplo" badge. It will be replaced by
+ * Project records in this file are illustrative only: every project carries
+ * `isDemo: true` and renders with an "Exemplo" badge. They will be replaced by
  * content managed in the future admin panel (see src/content/api.ts).
- * Only example projects remain here; partners stay empty until confirmed.
+ * Partner records below are separate and were identified as confirmed by the association.
  *
  * Project cards may use original AJOCAMARC photographs as thematic illustrations.
  * These images do not confirm that the example projects took place.
