@@ -162,7 +162,7 @@ function AboutPage() {
           <SectionHeading
             eyebrow="Parceiros e instituições"
             title="Quem colabora connosco"
-            description="Espaço reservado para os logótipos e a apresentação das instituições parceiras."
+            description={partners.length > 0 ? "Instituições parceiras identificadas pela AJOCAMARC e representadas pelos logótipos disponibilizados." : "Espaço reservado para a apresentação das instituições parceiras, após confirmação pela AJOCAMARC."}
           />
           {partners.length === 0 && (
             <PendingContent
