@@ -15,16 +15,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/sobre-nos")({
   head: () => ({
     meta: [
-      { title: "Sobre Nós — AJOCAMARC, de Cacuaco (2020) a 150 cooperativas associadas" },
+      { title: "Sobre Nós — AJOCAMARC | Associação dos Jovens Catadores" },
       {
         name: "description",
         content:
-          "Quem é a AJOCAMARC: a iniciativa iniciada em Cacuaco em 2020, a constituição da associação e das cinco cooperativas em 2021 e a rede actual de 150 cooperativas associadas.",
+          "Conheça a AJOCAMARC, a sua história, missão, liderança e rede de cooperativas de catadores de materiais recicláveis em Angola.",
       },
       { property: "og:title", content: "Sobre Nós — AJOCAMARC" },
       {
         property: "og:description",
-        content: "Da iniciativa em Cacuaco, em 2020, a uma rede de 150 cooperativas de catadores associadas.",
+        content: "História, missão, liderança e rede de cooperativas da AJOCAMARC em Angola.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -44,7 +44,7 @@ function AboutPage() {
       <PageHeader
         eyebrow="Quem somos"
         title="Sobre Nós"
-        description={`A ${site.fullName}: da iniciativa de jovens catadores em ${site.origin.place}, em ${site.origin.year}, a uma rede de ${site.cooperativesAssociated} cooperativas associadas.`}
+        description={`A ${site.fullName}: da iniciativa de jovens catadores em ${site.origin.place}, em ${site.origin.year}, à organização e representação de cooperativas em Angola.`}
         crumbs={[{ label: "Sobre Nós" }]}
         image={{ ...photos.camiao, position: "50% 40%" }}
       />
@@ -56,8 +56,8 @@ function AboutPage() {
           <p className="mt-2 text-lg font-medium text-muted-foreground">{site.fullName}</p>
           <p className="prose-site mt-6 text-muted-foreground">
             Nascida de uma iniciativa em {site.origin.place}, em {site.origin.year}, a {site.shortName}{" "}
-            foi constituída como associação em {site.foundedYear}. Conta hoje com{" "}
-            {site.cooperativesAssociated} cooperativas associadas.
+            foi constituída como associação em {site.foundedYear}. A associação indica uma rede de{" "}
+            {site.cooperativesAssociated} cooperativas associadas. A listagem pública disponível neste website é apresentada progressivamente e ainda não representa necessariamente a totalidade dessa rede.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild variant="brand" size="lg">
@@ -146,7 +146,7 @@ function AboutPage() {
             <p className="font-display text-5xl font-extrabold text-primary">{site.cooperativesAssociated}</p>
             <h2 className="mt-2 text-2xl font-bold md:text-3xl">Cooperativas associadas</h2>
             <p className="mt-2 max-w-xl text-muted-foreground">
-              Conheça as cooperativas que integram a rede da {site.shortName}, apresentadas progressivamente.
+              Total indicado pela associação. A listagem pública está a ser actualizada progressivamente e não representa ainda, necessariamente, todas as cooperativas da rede.
             </p>
           </div>
           <Button asChild variant="cta" size="lg">
