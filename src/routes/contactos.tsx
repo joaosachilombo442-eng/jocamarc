@@ -133,6 +133,9 @@ function ContactPage() {
         <form onSubmit={onSubmit} noValidate className="rounded-2xl border bg-card p-6 shadow-soft sm:p-10">
           <h2 className="text-2xl font-bold">Envie-nos uma mensagem</h2>
           <p className="mt-2 text-sm text-muted-foreground">Os campos assinalados com * são obrigatórios.</p>
+          <p role="status" className="mt-4 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-sm text-muted-foreground">
+            O formulário ainda não está ligado ao sistema de recepção de mensagens. Para um contacto efectivo, utilize os números de telefone indicados nesta página.
+          </p>
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             <Field id="name" label="Nome *" error={errors.name}>
               <Input id="name" name="name" autoComplete="name" className="h-11" aria-invalid={!!errors.name} />
